@@ -1,10 +1,9 @@
-package bit.keigdl1.eventhandlers_21a;
+package bit.keigdl1.eventhandlers_22;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,26 +14,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText txtNoAtSymbol = (EditText) findViewById(R.id.txtNoAtSymbol);
-        txtNoAtSymbol.setOnKeyListener(new onKeyEventHandler());
-    }
+        EditText txtUsername = (EditText) findViewById(R.id.txtUsername);
+        txtUsername.setOnKeyListener(new onKeyEventHandler());
+}
 
     //Inner class for key listener - prompts toast when '@' is typed.
     public class onKeyEventHandler implements View.OnKeyListener{
 
         @Override
         public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if (event.getAction() == KeyEvent.ACTION_DOWN){
-                //Makes this toast only show on a keydown event.
-                if(keyCode == KeyEvent.KEYCODE_AT) {
-                    //A key event is triggered on key up AND down,
-                    // so you'll see two toasts if the event time isn't specified.
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)){
                     Toast statusToast = Toast.makeText(MainActivity.this, "Don't Type @!", Toast.LENGTH_SHORT);
                     statusToast.show();
-                }
             }
-
-            return false;
-        }
+        return false;
     }
+}
+    public void test(){
+
+    }
+
 }
