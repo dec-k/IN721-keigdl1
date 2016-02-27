@@ -24,9 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Create spinner reference
         Spinner spnMonthPicker = (Spinner) findViewById(R.id.spnMonthPicker);
+
         //Create an adapter, which hooks the strings.xml file and the specified array
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.months_array, android.R.layout.simple_spinner_item);
+
         //Control spinner dropdown layout/style (Can be customised with your own res xml file)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -61,18 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 String selectedMonth = (String) spnMonthPicker.getSelectedItem();
                 txtConfirmDialog.setText("You are now enrolled for Cello lessons in " + selectedMonth + ".");
             }
-        }
-    }
-
-    public class onSpinnerSelect implements AdapterView.OnItemSelectedListener{
-
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        }
-
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-
         }
     }
 }
