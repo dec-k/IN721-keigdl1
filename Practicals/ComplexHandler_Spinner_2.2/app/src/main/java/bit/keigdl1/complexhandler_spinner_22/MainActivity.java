@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
             }else if(rdoCello.isChecked()){
                 String selectedMonth = (String) spnMonthPicker.getSelectedItem();
                 txtConfirmDialog.setText("You are now enrolled for Cello lessons in " + selectedMonth + ".");
+            }else{
+                Toast.makeText(MainActivity.this, "You have not selected an instrument.", Toast.LENGTH_SHORT).show();
             }
         }
     }
