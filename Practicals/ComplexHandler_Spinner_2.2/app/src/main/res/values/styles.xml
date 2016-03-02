@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--Splash Screen theme without title bar-->
+    <style name="splashNoTitleBar" parent="Theme.AppCompat.Light.NoActionBar">
+    </style>
+
 </resources>
