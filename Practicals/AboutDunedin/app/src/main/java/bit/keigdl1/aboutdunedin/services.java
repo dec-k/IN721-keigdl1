@@ -3,7 +3,7 @@ package bit.keigdl1.aboutdunedin;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class services extends AppCompatActivity {
+public class Services extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

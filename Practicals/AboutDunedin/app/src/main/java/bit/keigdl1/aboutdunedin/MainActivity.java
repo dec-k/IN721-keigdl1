@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
             //Switch depending on the selected item
             switch(clickedItem){
                 case "Services":
-                    targetActivity = new Intent(MainActivity.this, services.class);
+                    targetActivity = new Intent(MainActivity.this, Services.class);
                     break;
-                case "Fun Things to Do":
+                case "Fun Things to do":
                     targetActivity = new Intent(MainActivity.this, FunThings.class);
                     break;
                 case "Dining":
@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if(targetActivity != null){
+                //swap to the saved activity
                 startActivity(targetActivity);
             }
 
