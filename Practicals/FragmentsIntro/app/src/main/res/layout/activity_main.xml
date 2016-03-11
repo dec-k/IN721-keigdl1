@@ -9,8 +9,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="bit.keigdl1.fragmentsintro.MainActivity">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="Image View"
+        android:id="@+id/btnImageFragment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List View"
+        android:id="@+id/btnListFragment"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnImageFragment"
+        android:layout_toEndOf="@+id/btnImageFragment" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnImageFragment"></LinearLayout>
 </RelativeLayout>
