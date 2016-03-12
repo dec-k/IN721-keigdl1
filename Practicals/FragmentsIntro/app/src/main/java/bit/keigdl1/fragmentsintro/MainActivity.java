@@ -14,10 +14,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_tablet);
 
         //Get ref to buttons
-        Button btnImageFrag = (Button) findViewById(R.id.btnImageFragment);
+        Button btnImageFrag = (Button) findViewById(R.id.btnImgFragment);
         Button btnListViewFrag = (Button) findViewById(R.id.btnListFragment);
 
         //Bind a custom click handler to imagefrag
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
             //Replace the placeholder with the fragment
-            ft.replace(R.id.fragHolder, dynamicFragment);
+            ft.replace(R.id.ph1, dynamicFragment);
 
             //Complete the transaction
             ft.commit();
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
 
             //Replace the placeholder with the fragment
-            ft.replace(R.id.fragHolder, dynamicFragment);
+            ft.replace(R.id.ph2, dynamicFragment);
 
             //Complete the transaction
             ft.commit();

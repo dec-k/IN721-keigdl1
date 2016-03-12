@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="List View"
+        android:id="@+id/btnListFragment"
+        android:layout_alignTop="@+id/btnImgFragment"
+        android:layout_toRightOf="@+id/btnImgFragment"
+        android:layout_toEndOf="@+id/btnImgFragment" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image View"
+        android:id="@+id/btnImgFragment"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/btnListFragment"
+        android:id="@+id/ph1"
+        android:layout_alignParentTop="true"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="500dp"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnListFragment"
+        android:layout_toRightOf="@+id/ph1"
+        android:layout_toEndOf="@+id/ph1"
+        android:id="@+id/ph2"
+        android:layout_alignParentTop="true"></LinearLayout>
+</RelativeLayout>
