@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Bind a custom click handler to imagefrag
         btnImageFrag.setOnClickListener(new onImgBtnClickHandler());
+        btnListViewFrag.setOnClickListener(new onLvBtnClickHandler());
     }
 
     public class onImgBtnClickHandler implements View.OnClickListener{
@@ -30,6 +31,26 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v){
             //Create an instance of my fragment class
             Fragment dynamicFragment = new imageViewFragment();
+            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+
+            //Begin fragment transaction
+            //Use the fragment manager to begin a transition.
+            android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+
+            //Replace the placeholder with the fragment
+            ft.replace(R.id.fragHolder, dynamicFragment);
+
+            //Complete the transaction
+            ft.commit();
+        }
+    }
+
+    public class onLvBtnClickHandler implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v){
+            //Create an instance of my fragment class
+            Fragment dynamicFragment = new listViewFragment();
             android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
 
             //Begin fragment transaction
