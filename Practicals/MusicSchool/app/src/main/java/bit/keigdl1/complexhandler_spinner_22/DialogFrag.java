@@ -25,7 +25,7 @@ public class DialogFrag extends DialogFragment {
         Button btnYes = (Button) dialogView.findViewById(R.id.btnYes);
         btnYes.setOnClickListener(new onYesButton());
         Button btnNo = (Button) dialogView.findViewById(R.id.btnNo);
-        btnYes.setOnClickListener(new onNoButton());
+        btnNo.setOnClickListener(new onNoButton());
 
         //Ret
         return dialogView;
