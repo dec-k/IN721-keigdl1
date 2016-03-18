@@ -24,4 +24,6 @@ public class DialogFrag extends DialogFragment {
         return dialogView;
     }
 
+    public class onYesButton()
+
 }
