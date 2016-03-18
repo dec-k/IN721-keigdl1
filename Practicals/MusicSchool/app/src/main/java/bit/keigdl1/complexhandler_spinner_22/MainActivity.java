@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Method to retrieve data from fragment
+    //Fetches input from the created fragment.
     public void giveMeData(boolean enrolMusic){
         //Dismiss the dialog window, closing it.
         confDialogWindow.dismiss();
@@ -67,39 +67,40 @@ public class MainActivity extends AppCompatActivity {
 
         //Determine if user clicked yes, or no/cancelled.
         if(enrolMusic){
-            outputTxt.setText("Successfully Enrolled, thank you.");
+            outputTxt.setText(outputString());
         }else{
-            outputTxt.setText("Oh okay then, I guess you hate music.");
+            outputTxt.setText("Your enrolment has been cancelled.");
         }
     }
 
+    //Method that returns a string out what should be output to the form.
     public String outputString(){
         //Setup references to the three radioButtons
         RadioButton rdoAccordion = (RadioButton) findViewById(R.id.rdoAccordion);
         RadioButton rdoBassoon = (RadioButton) findViewById(R.id.rdoBassoon);
         RadioButton rdoCello = (RadioButton) findViewById(R.id.rdoCello);
 
-        //And a reference to the confirm dialog textView
-        TextView txtConfirmDialog = (TextView) findViewById(R.id.txtConfirmText);
+        //Declare the return string
+        String outRet;
 
-        //...and a reference to the spinner.
-        //Patricia if you see this, I made this reference twice. Once in onCreate and once here,
-        //is this really bad form?
+        //Spinner ref
         Spinner spnMonthPicker = (Spinner) findViewById(R.id.spnMonthPicker);
 
         //Determine which one is checked
         if (rdoAccordion.isChecked()){
             String selectedMonth = (String) spnMonthPicker.getSelectedItem();
-            txtConfirmDialog.setText("You are now enrolled for Accordion lessons in " + selectedMonth + ".");
+            outRet = ("You are now enrolled for Accordion lessons in " + selectedMonth + ".");
         }else if(rdoBassoon.isChecked()){
             String selectedMonth = (String) spnMonthPicker.getSelectedItem();
-            txtConfirmDialog.setText("You are now enrolled for Bassoon lessons in " + selectedMonth + ".");
+            outRet = ("You are now enrolled for Bassoon lessons in " + selectedMonth + ".");
         }else if(rdoCello.isChecked()){
             String selectedMonth = (String) spnMonthPicker.getSelectedItem();
-            txtConfirmDialog.setText("You are now enrolled for Cello lessons in " + selectedMonth + ".");
+            outRet = ("You are now enrolled for Cello lessons in " + selectedMonth + ".");
         }else{
-            Toast.makeText(MainActivity.this, "You have not selected an instrument.", Toast.LENGTH_SHORT).show();
+            outRet = ("Please pick an instrument before enrolling.");
         }
+
+        return outRet;
     }
 
     //Deprecated: Old class that didn't encapsulate form writing or use dialogs.
