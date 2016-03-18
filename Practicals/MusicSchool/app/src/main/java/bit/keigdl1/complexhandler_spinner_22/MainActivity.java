@@ -1,6 +1,7 @@
 package bit.keigdl1.complexhandler_spinner_22;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Setup confirm button & its listener.
         Button btnConfirm = (Button) findViewById(R.id.btnConfirm);
-        btnConfirm.setOnClickListener(new onClickHandler());
+        btnConfirm.setOnClickListener(new onClickDialogHandler());
 
         //Create spinner reference
         Spinner spnMonthPicker = (Spinner) findViewById(R.id.spnMonthPicker);
@@ -38,12 +39,24 @@ public class MainActivity extends AppCompatActivity {
         spnMonthPicker.setAdapter(adapter);
     }
 
+    public class onClickDialogHandler implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            //Make a fragment manager
+            FragmentManager fm = getFragmentManager();
+
+            //New Instance of dialogFrag
+            DialogFrag confDialogWindow = new DialogFrag();
+
+            //Pull up a dialog window
+            confDialogWindow.show(fm,"test");
+        }
+    }
+
+    //Not in use: Old class that uses onClick to output a text string to field.
     public class onClickHandler implements View.OnClickListener{
         @Override
         public void onClick(View v) {
-            //Setup dialog box
-            confirmEnrol = new ConfirmHandler();
-
             //Setup references to the three radioButtons
             RadioButton rdoAccordion = (RadioButton) findViewById(R.id.rdoAccordion);
             RadioButton rdoBassoon = (RadioButton) findViewById(R.id.rdoBassoon);
