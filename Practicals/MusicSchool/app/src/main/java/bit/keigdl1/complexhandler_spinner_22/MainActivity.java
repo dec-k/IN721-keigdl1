@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     public class onClickHandler implements View.OnClickListener{
         @Override
         public void onClick(View v) {
+            //Setup dialog box
+            confirmEnrol = new ConfirmHandler();
+
             //Setup references to the three radioButtons
             RadioButton rdoAccordion = (RadioButton) findViewById(R.id.rdoAccordion);
             RadioButton rdoBassoon = (RadioButton) findViewById(R.id.rdoBassoon);
