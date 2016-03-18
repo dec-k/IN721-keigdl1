@@ -15,6 +15,10 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Dialog frag declaration
+    //Declared globally so data can be passed around through it and it's lifecycle wont instantly
+    //terminate when it leaves user control.
+    DialogFrag confDialogWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +50,26 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fm = getFragmentManager();
 
             //New Instance of dialogFrag
-            DialogFrag confDialogWindow = new DialogFrag();
+            confDialogWindow = new DialogFrag();
 
-            //Pull up a dialog window
-            confDialogWindow.show(fm,"test");
+            //Pull up a dialog window using the fragmentManager and a tag.
+            confDialogWindow.show(fm,"tag-irrelevant");
+        }
+    }
+
+    //Method to retrieve data from fragment
+    public void giveMeData(boolean enrolMusic){
+        //Dismiss the dialog window, closing it.
+        confDialogWindow.dismiss();
+
+        //Grab dialog box to write output to
+        TextView outputTxt = (TextView) findViewById(R.id.txtConfirmText);
+
+        //Determine if user clicked yes, or no/cancelled.
+        if(enrolMusic){
+            outputTxt.setText("Successfully Enrolled, thank you.");
+        }else{
+            outputTxt.setText("Oh okay then, I guess you hate music.");
         }
     }
 
