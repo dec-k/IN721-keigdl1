@@ -5,7 +5,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,49 @@ public class QuestionAct extends AppCompatActivity {
 
         //Load in a question at activity load
         loadNextQuestion();
+
+        //Setup choice button
+        Button btnChoice = (Button)findViewById(R.id.btnConf);
+        //bind
+        btnChoice.setOnClickListener(new processBtnClick());
+    }
+
+    public class processBtnClick implements View.OnClickListener{
+        @Override
+        public void onClick(View v){
+            //Set question var for the currentlyOn question
+            Question curOnQuestion = (Question) questionList.get(currentlyOn);
+
+            //Get answer
+            String curAnswer = curOnQuestion.getAnswer();
+
+            //Ref rdobtns & grp
+            RadioButton rdoDas = (RadioButton) findViewById(R.id.rdoDas);
+            RadioButton rdoDie = (RadioButton) findViewById(R.id.rdoDie);
+            RadioButton rdoDer = (RadioButton) findViewById(R.id.rdoDer);
+
+            //Determine selected rdo
+            if(rdoDas.isChecked()){
+                //Determine if selected rdo is equal to answer
+                if(rdoDas.getText() == curAnswer){
+                    //// TODO: 3/28/2016 implement 'correct fragment'
+                }else{
+                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                }
+            }else if(rdoDie.isChecked()){
+                if(rdoDie.getText() == curAnswer){
+                    //// TODO: 3/28/2016 implement 'correct fragment'
+                }else{
+                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                }
+            }else if(rdoDer.isChecked()){
+                if(rdoDer.getText() == curAnswer){
+                    //// TODO: 3/28/2016 implement 'correct fragment'
+                }else{
+                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                }
+            }
+        }
     }
 
     public void genQuestions(){
