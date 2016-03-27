@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,9 @@ public class QuestionAct extends AppCompatActivity {
                 }else{
                     //// TODO: 3/28/2016 implement 'incorrect fragment'
                 }
+            }else{
+                //Show anonymously created toast prompting the user to select an answer
+                Toast.makeText(QuestionAct.this, "Please select an article.", Toast.LENGTH_SHORT).show();
             }
         }
     }
