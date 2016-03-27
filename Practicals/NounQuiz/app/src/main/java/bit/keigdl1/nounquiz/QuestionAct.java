@@ -64,12 +64,12 @@ public class QuestionAct extends AppCompatActivity {
     public void shuffleList(){
         //Setup random numbers which align with index values in the question list.
         Random rndShuffle = new Random();
-        int randA = rndShuffle.nextInt(12);
-        int randB = rndShuffle.nextInt(12);
+        int randA = rndShuffle.nextInt(11);
+        int randB = rndShuffle.nextInt(11);
 
         //Prevent the two numbers being the same
         while(randA == randB){
-            randB = rndShuffle.nextInt(12);
+            randB = rndShuffle.nextInt(11);
         }
 
         //Create a temp variable to hold question A
