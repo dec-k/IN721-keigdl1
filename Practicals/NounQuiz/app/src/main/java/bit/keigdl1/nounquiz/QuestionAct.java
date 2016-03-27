@@ -1,6 +1,8 @@
 package bit.keigdl1.nounquiz;
 
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -16,11 +18,16 @@ public class QuestionAct extends AppCompatActivity {
     int scoreTotal;
     //Variable for which question the quiz is currently on
     int currentlyOn;
+    //Get resources as a var
+    Resources res;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+
+        //Init res
+        res = getResources();
 
         //Declare & instantiate a question list
         questionList = new ArrayList();
@@ -38,19 +45,19 @@ public class QuestionAct extends AppCompatActivity {
 
     public void genQuestions(){
         //Das - Neutral
-        questionList.add(new Question("Auto", "Das", BitmapFactory.decodeFile(String.valueOf(R.drawable.das_auto))));
-        questionList.add(new Question("Haus", "Das", BitmapFactory.decodeFile(String.valueOf(R.drawable.das_haus))));
-        questionList.add(new Question("Schaf","Das",BitmapFactory.decodeFile(String.valueOf(R.drawable.das_schaf))));
+        questionList.add(new Question("Auto", "Das", res.getDrawable(R.drawable.das_auto)));
+        questionList.add(new Question("Haus", "Das", res.getDrawable(R.drawable.das_haus)));
+        questionList.add(new Question("Schaf","Das", res.getDrawable(R.drawable.das_schaf)));
         //Der - Masculine
-        questionList.add(new Question("Apfel","Der",BitmapFactory.decodeFile(String.valueOf(R.drawable.der_apfel))));
-        questionList.add(new Question("Baum","Der",BitmapFactory.decodeFile(String.valueOf(R.drawable.der_baum))));
-        questionList.add(new Question("Stuhl","Der",BitmapFactory.decodeFile(String.valueOf(R.drawable.der_stuhl))));
+        questionList.add(new Question("Apfel","Der",res.getDrawable(R.drawable.der_apfel)));
+        questionList.add(new Question("Baum","Der",res.getDrawable(R.drawable.der_baum)));
+        questionList.add(new Question("Stuhl","Der",res.getDrawable(R.drawable.der_stuhl)));
         //Die - Feminine
-        questionList.add(new Question("Ente","Die",BitmapFactory.decodeFile(String.valueOf(R.drawable.die_ente))));
-        questionList.add(new Question("Hexe","Die",BitmapFactory.decodeFile(String.valueOf(R.drawable.die_hexe))));
-        questionList.add(new Question("Kuh", "Die", BitmapFactory.decodeFile(String.valueOf(R.drawable.die_kuh))));
-        questionList.add(new Question("Milch", "Die", BitmapFactory.decodeFile(String.valueOf(R.drawable.die_milch))));
-        questionList.add(new Question("Strasse","Die",BitmapFactory.decodeFile(String.valueOf(R.drawable.die_strasse))));
+        questionList.add(new Question("Ente","Die",res.getDrawable(R.drawable.die_ente)));
+        questionList.add(new Question("Hexe","Die",res.getDrawable(R.drawable.die_hexe)));
+        questionList.add(new Question("Kuh", "Die", res.getDrawable(R.drawable.die_kuh)));
+        questionList.add(new Question("Milch", "Die", res.getDrawable(R.drawable.die_milch)));
+        questionList.add(new Question("Strasse","Die",res.getDrawable(R.drawable.die_strasse)));
 
 
         for(int i = 0; i < 100; i++){
@@ -90,6 +97,6 @@ public class QuestionAct extends AppCompatActivity {
         Question curOnQuestion = (Question) questionList.get(currentlyOn);
 
         //Use that questions image accessors to get a bitmap of its image and draw it to the iv
-        iv.setImageBitmap(curOnQuestion.getImage());
+        iv.setImageDrawable(curOnQuestion.getImage());
     }
 }

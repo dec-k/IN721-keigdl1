@@ -1,6 +1,7 @@
 package bit.keigdl1.nounquiz;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by Decura on 3/28/2016.
@@ -9,10 +10,10 @@ public class Question {
     //Attributes of a question
     private String noun;
     private String answer;
-    private Bitmap image;
+    private Drawable image;
 
     //Constructor
-    public Question(String noun, String answer, Bitmap image){
+    public Question(String noun, String answer, Drawable image){
         this.setNoun(noun);
         this.setAnswer(answer);
         this.setImage(image);
@@ -32,10 +33,10 @@ public class Question {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-    public Bitmap getImage() {
+    public Drawable getImage() {
         return image;
     }
-    public void setImage(Bitmap image) {
+    public void setImage(Drawable image) {
         this.image = image;
     }
 }
