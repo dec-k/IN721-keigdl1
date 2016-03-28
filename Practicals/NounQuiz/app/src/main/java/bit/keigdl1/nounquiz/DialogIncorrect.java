@@ -19,7 +19,7 @@ public class DialogIncorrect extends DialogFragment {
         dWin.setTitle("Wrong Answer!");
 
         //Inflate XML into an actual set of screen controls
-        View dialogView = inflater.inflate(R.layout.correct_fragment,container);
+        View dialogView = inflater.inflate(R.layout.incorrect_fragment,container);
 
         //Ref to next button, later on this will let me notify the main activity
         //that the fragment button has been clicked.

@@ -92,7 +92,7 @@ public class QuestionAct extends AppCompatActivity {
                     dIncorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDie.isChecked()){
-                if(rdoDie.getText() == curAnswer){
+                if("Die" == curAnswer){
                     //Give control to 'correct' fragment, showing it
                     dCorrect.show(fm,"Useless Tag");
                     //Increase score
@@ -102,7 +102,7 @@ public class QuestionAct extends AppCompatActivity {
                     dIncorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDer.isChecked()){
-                if(rdoDer.getText() == curAnswer){
+                if("Der" == curAnswer){
                     //Give control to 'correct' fragment, showing it
                     dCorrect.show(fm,"Useless Tag");
                     //Increase score
@@ -178,6 +178,7 @@ public class QuestionAct extends AppCompatActivity {
     public void DismissFragment(){
         //Dismiss screen fragment
         dCorrect.dismiss();
+        dIncorrect.dismiss();
 
         //Increment the currently being used question
         currentlyOn++;
