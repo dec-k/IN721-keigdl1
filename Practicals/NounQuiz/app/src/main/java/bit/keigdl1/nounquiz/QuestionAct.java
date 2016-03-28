@@ -26,9 +26,9 @@ public class QuestionAct extends AppCompatActivity {
     int currentlyOn;
     //Get resources as a var
     Resources res;
-    //Create fragment manager
-    //Setup the correct fragment call
+    //Create fm & fragments
     FragmentManager fm;
+    DialogCorrect dCorrect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,9 @@ public class QuestionAct extends AppCompatActivity {
         //Init res
         res = getResources();
 
-        //Init fm
+        //Init fm & frags
         fm = getFragmentManager();
+        dCorrect = new DialogCorrect();
 
         //Declare & instantiate a question list
         questionList = new ArrayList();
@@ -77,13 +78,11 @@ public class QuestionAct extends AppCompatActivity {
             //Determine selected rdo
             if(rdoDas.isChecked()){
                 //Determine if selected rdo is equal to answer
-                // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why? 
+                // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why?
                 if("Das" == curAnswer){
-                    //Setup new frag
-                    DialogCorrect dCorrect = new DialogCorrect();
-
-                    //Give control to fragment, showing it
+                    //Give control to 'correct' fragment, showing it
                     dCorrect.show(fm,"Useless Tag");
+                    scoreTotal++;
                 }else{
 
                 }
@@ -161,5 +160,16 @@ public class QuestionAct extends AppCompatActivity {
 
         //Use that questions image accessors to get a bitmap of its image and draw it to the iv
         iv.setImageDrawable(curOnQuestion.getImage());
+    }
+
+    public void DismissFragment(){
+        //Dismiss screen fragment
+        dCorrect.dismiss();
+
+        //Increment the currently being used question
+        currentlyOn++;
+
+        //Load the next question to the activity
+        loadNextQuestion();
     }
 }
