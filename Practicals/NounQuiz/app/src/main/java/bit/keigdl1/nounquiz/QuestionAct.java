@@ -1,5 +1,6 @@
 package bit.keigdl1.nounquiz;
 
+import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -25,6 +26,9 @@ public class QuestionAct extends AppCompatActivity {
     int currentlyOn;
     //Get resources as a var
     Resources res;
+    //Create fragment manager
+    //Setup the correct fragment call
+    FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,9 @@ public class QuestionAct extends AppCompatActivity {
 
         //Init res
         res = getResources();
+
+        //Init fm
+        fm = getFragmentManager();
 
         //Declare & instantiate a question list
         questionList = new ArrayList();
@@ -71,9 +78,17 @@ public class QuestionAct extends AppCompatActivity {
             if(rdoDas.isChecked()){
                 //Determine if selected rdo is equal to answer
                 if(rdoDas.getText() == curAnswer){
-                    //// TODO: 3/28/2016 implement 'correct fragment'
+                    //Setup new frag
+                    DialogCorrect dCorrect = new DialogCorrect();
+
+                    //Give control to fragment, showing it
+                    dCorrect.show(fm,"Useless Tag");
                 }else{
-                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                    //Setup new frag
+                    DialogCorrect dCorrect = new DialogCorrect();
+
+                    //Give control to fragment, showing it
+                    dCorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDie.isChecked()){
                 if(rdoDie.getText() == curAnswer){
