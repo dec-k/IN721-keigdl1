@@ -192,8 +192,6 @@ public class QuestionAct extends AppCompatActivity {
         if(answer){
             //Increase score
             scoreTotal++;
-            //Debug: Output score to logcat to see its incrementing
-            System.out.println(scoreTotal);
             bundlePass.putString("TypeOfFragment","Correct Answer!");
         }else{
             bundlePass.putString("TypeOfFragment","Wrong Answer...");

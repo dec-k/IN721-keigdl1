@@ -19,8 +19,6 @@ public class ScoreActivity extends AppCompatActivity {
 
         //Get extra data from putExtra
         int userScore = whoLaunchedMe.getIntExtra("UserScore",0);
-        //debug
-        System.out.println("value passed to results was: " + userScore);
 
         //Get ref to textview that will output score
         TextView txtScore = (TextView) findViewById(R.id.txtResult);
