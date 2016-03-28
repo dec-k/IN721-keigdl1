@@ -24,10 +24,10 @@ public class ScoreActivity extends AppCompatActivity {
 
         //Get ref to textview that will output score
         TextView txtScore = (TextView) findViewById(R.id.txtResult);
-        txtScore.setText(Integer.toString(userScore) + "/11");
+        txtScore.setText(userScore + "/11");
 
         //Ref & bind button to go back to the start
-        Button backToStart = (Button) findViewById(R.id.btnAgain);
+        Button backToStart = (Button) findViewById(R.id.btnRetry);
         backToStart.setOnClickListener(new retryButtonHandler());
     }
 

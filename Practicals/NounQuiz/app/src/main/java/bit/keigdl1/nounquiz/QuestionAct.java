@@ -155,7 +155,7 @@ public class QuestionAct extends AppCompatActivity {
         //First, determine if currentlyOn is higher than the amount of questions
         if(currentlyOn > 10){
             //Setup intent to move to the results screen
-            Intent goToResults = new Intent(QuestionAct.this,EndActivity.class);
+            Intent goToResults = new Intent(QuestionAct.this,ScoreActivity.class);
             //Load extra data about user score into the intent
             goToResults.putExtra("UserScore",scoreTotal);
             //Give control to result screen
