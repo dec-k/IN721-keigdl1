@@ -24,7 +24,6 @@ public class QuestionAct extends AppCompatActivity {
     //Get resources as a var
     Resources res;
     //Create fm & fragments
-    // TODO: 3/28/2016 Tidy up naming conventions of fragments
     FragmentManager fm;
     DialogNext dialogNextPrompt;
 
@@ -80,7 +79,6 @@ public class QuestionAct extends AppCompatActivity {
             //Determine selected rdo
             if(rdoDas.isChecked()){
                 //Determine if selected rdo is equal to answer
-                // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why?
                 if("Das" == curAnswer){
                     //Call manageAnswer to handle fragment transitioning
                     manageAnswer(true);
