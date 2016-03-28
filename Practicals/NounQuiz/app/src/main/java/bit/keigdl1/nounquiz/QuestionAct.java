@@ -1,6 +1,7 @@
 package bit.keigdl1.nounquiz;
 
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -29,6 +30,7 @@ public class QuestionAct extends AppCompatActivity {
     //Create fm & fragments
     FragmentManager fm;
     DialogCorrect dCorrect;
+    DialogIncorrect dIncorrect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class QuestionAct extends AppCompatActivity {
         //Init fm & frags
         fm = getFragmentManager();
         dCorrect = new DialogCorrect();
+        dIncorrect = new DialogIncorrect();
 
         //Declare & instantiate a question list
         questionList = new ArrayList();
@@ -82,21 +85,31 @@ public class QuestionAct extends AppCompatActivity {
                 if("Das" == curAnswer){
                     //Give control to 'correct' fragment, showing it
                     dCorrect.show(fm,"Useless Tag");
+                    //Increase score
                     scoreTotal++;
                 }else{
-
+                    //Give control to 'correct' fragment, showing it
+                    dIncorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDie.isChecked()){
                 if(rdoDie.getText() == curAnswer){
-                    //// TODO: 3/28/2016 implement 'correct fragment'
+                    //Give control to 'correct' fragment, showing it
+                    dCorrect.show(fm,"Useless Tag");
+                    //Increase score
+                    scoreTotal++;
                 }else{
-                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                    //Give control to 'correct' fragment, showing it
+                    dIncorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDer.isChecked()){
                 if(rdoDer.getText() == curAnswer){
-                    //// TODO: 3/28/2016 implement 'correct fragment'
+                    //Give control to 'correct' fragment, showing it
+                    dCorrect.show(fm,"Useless Tag");
+                    //Increase score
+                    scoreTotal++;
                 }else{
-                    //// TODO: 3/28/2016 implement 'incorrect fragment'
+                    //Give control to 'correct' fragment, showing it
+                    dIncorrect.show(fm,"Useless Tag");
                 }
             }else{
                 //Show anonymously created toast prompting the user to select an answer
