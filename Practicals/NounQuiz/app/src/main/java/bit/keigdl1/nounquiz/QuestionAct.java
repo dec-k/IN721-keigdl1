@@ -28,9 +28,13 @@ public class QuestionAct extends AppCompatActivity {
     //Get resources as a var
     Resources res;
     //Create fm & fragments
+    // TODO: 3/28/2016 Tidy up naming conventions of fragments
     FragmentManager fm;
     DialogCorrect dCorrect;
     DialogIncorrect dIncorrect;
+
+    //Bundle to pass info to a fragment
+    Bundle bundlePass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +44,11 @@ public class QuestionAct extends AppCompatActivity {
         //Init res
         res = getResources();
 
-        //Init fm & frags
+        //Init fm & frags & bundle
         fm = getFragmentManager();
         dCorrect = new DialogCorrect();
         dIncorrect = new DialogIncorrect();
+        bundlePass = new Bundle();
 
         //Declare & instantiate a question list
         questionList = new ArrayList();
@@ -83,33 +88,22 @@ public class QuestionAct extends AppCompatActivity {
                 //Determine if selected rdo is equal to answer
                 // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why?
                 if("Das" == curAnswer){
-                    //Give control to 'correct' fragment, showing it
-                    dCorrect.show(fm,"Useless Tag");
-                    //Increase score
-                    scoreTotal++;
+                    //Call manage answer to dick around with fragments a bit
+                    manageAnswer(true);
                 }else{
-                    //Give control to 'correct' fragment, showing it
-                    dIncorrect.show(fm,"Useless Tag");
+                    manageAnswer(false);
                 }
             }else if(rdoDie.isChecked()){
                 if("Die" == curAnswer){
-                    //Give control to 'correct' fragment, showing it
-                    dCorrect.show(fm,"Useless Tag");
-                    //Increase score
-                    scoreTotal++;
+                    manageAnswer(true);
                 }else{
-                    //Give control to 'correct' fragment, showing it
-                    dIncorrect.show(fm,"Useless Tag");
+                    manageAnswer(false);
                 }
             }else if(rdoDer.isChecked()){
                 if("Der" == curAnswer){
-                    //Give control to 'correct' fragment, showing it
-                    dCorrect.show(fm,"Useless Tag");
-                    //Increase score
-                    scoreTotal++;
+                    manageAnswer(true);
                 }else{
-                    //Give control to 'correct' fragment, showing it
-                    dIncorrect.show(fm,"Useless Tag");
+                    manageAnswer(false);
                 }
             }else{
                 //Show anonymously created toast prompting the user to select an answer
@@ -178,12 +172,26 @@ public class QuestionAct extends AppCompatActivity {
     public void DismissFragment(){
         //Dismiss screen fragment
         dCorrect.dismiss();
-        dIncorrect.dismiss();
 
         //Increment the currently being used question
         currentlyOn++;
 
         //Load the next question to the activity
         loadNextQuestion();
+    }
+
+    public void manageAnswer(boolean answer){
+        //Load up bundle with the correct type of string
+        if(answer){
+            bundlePass.putString("TypeOfFragment","Correct Answer!");
+            //Increase score
+            scoreTotal++;
+        }else{
+            bundlePass.putString("TypeOfFragment","Wrong Answer...");
+        }
+
+        dCorrect.setArguments(bundlePass);
+        //Give control to 'correct' fragment, showing it
+        dCorrect.show(fm,"Useless Tag");
     }
 }
