@@ -1,6 +1,7 @@
 package bit.keigdl1.nounquiz;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -118,7 +119,7 @@ public class QuestionAct extends AppCompatActivity {
         questionList.add(new Question("Hexe","Die",res.getDrawable(R.drawable.die_hexe)));
         questionList.add(new Question("Kuh", "Die", res.getDrawable(R.drawable.die_kuh)));
         questionList.add(new Question("Milch", "Die", res.getDrawable(R.drawable.die_milch)));
-        questionList.add(new Question("Strasse","Die",res.getDrawable(R.drawable.die_strasse)));
+        questionList.add(new Question("Strasse", "Die", res.getDrawable(R.drawable.die_strasse)));
 
 
         for(int i = 0; i < 100; i++){
@@ -151,14 +152,28 @@ public class QuestionAct extends AppCompatActivity {
     }
 
     public void loadNextQuestion(){
-        //Get references to the required form component
-        ImageView iv = (ImageView)findViewById(R.id.imgQuestion);
+        //First, determine if currentlyOn is higher than the amount of questions
+        if(currentlyOn > 10){
+            //Setup intent to move to the results screen
+            Intent goToResults = new Intent(QuestionAct.this,EndActivity.class);
+            //Load extra data about user score into the intent
+            goToResults.putExtra("UserScore",scoreTotal);
+            //Give control to result screen
+            startActivity(goToResults);
+        }else{
+            //Get references to the required form component
+            ImageView iv = (ImageView)findViewById(R.id.imgQuestion);
 
-        //Set question var for the currentlyOn question
-        Question curOnQuestion = (Question) questionList.get(currentlyOn);
+            //Set question var for the currentlyOn question
+            Question curOnQuestion = (Question) questionList.get(currentlyOn);
 
-        //Use that questions image accessors to get a bitmap of its image and draw it to the iv
-        iv.setImageDrawable(curOnQuestion.getImage());
+            //Use that questions image accessors to get a bitmap of its image and draw it to the iv
+            iv.setImageDrawable(curOnQuestion.getImage());
+        }
+    }
+
+    public void goToResults(){
+
     }
 
     public void DismissFragment(){
