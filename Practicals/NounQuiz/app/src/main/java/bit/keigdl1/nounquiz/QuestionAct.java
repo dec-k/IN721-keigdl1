@@ -190,9 +190,11 @@ public class QuestionAct extends AppCompatActivity {
     public void manageAnswer(boolean answer){
         //Load up bundle with the correct type of string
         if(answer){
-            bundlePass.putString("TypeOfFragment","Correct Answer!");
             //Increase score
             scoreTotal++;
+            //Debug: Output score to logcat to see its incrementing
+            System.out.println(scoreTotal);
+            bundlePass.putString("TypeOfFragment","Correct Answer!");
         }else{
             bundlePass.putString("TypeOfFragment","Wrong Answer...");
         }
