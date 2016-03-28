@@ -1,17 +1,13 @@
 package bit.keigdl1.nounquiz;
 
 import android.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,8 +26,7 @@ public class QuestionAct extends AppCompatActivity {
     //Create fm & fragments
     // TODO: 3/28/2016 Tidy up naming conventions of fragments
     FragmentManager fm;
-    DialogCorrect dCorrect;
-    DialogIncorrect dIncorrect;
+    DialogNext dialogNextPrompt;
 
     //Bundle to pass info to a fragment
     Bundle bundlePass;
@@ -46,8 +41,7 @@ public class QuestionAct extends AppCompatActivity {
 
         //Init fm & frags & bundle
         fm = getFragmentManager();
-        dCorrect = new DialogCorrect();
-        dIncorrect = new DialogIncorrect();
+        dialogNextPrompt = new DialogNext();
         bundlePass = new Bundle();
 
         //Declare & instantiate a question list
@@ -88,7 +82,7 @@ public class QuestionAct extends AppCompatActivity {
                 //Determine if selected rdo is equal to answer
                 // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why?
                 if("Das" == curAnswer){
-                    //Call manage answer to dick around with fragments a bit
+                    //Call manageAnswer to handle fragment transitioning
                     manageAnswer(true);
                 }else{
                     manageAnswer(false);
@@ -171,7 +165,7 @@ public class QuestionAct extends AppCompatActivity {
 
     public void DismissFragment(){
         //Dismiss screen fragment
-        dCorrect.dismiss();
+        dialogNextPrompt.dismiss();
 
         //Increment the currently being used question
         currentlyOn++;
@@ -190,8 +184,10 @@ public class QuestionAct extends AppCompatActivity {
             bundlePass.putString("TypeOfFragment","Wrong Answer...");
         }
 
-        dCorrect.setArguments(bundlePass);
-        //Give control to 'correct' fragment, showing it
-        dCorrect.show(fm,"Useless Tag");
+        //Set the arguments of the fragment to contain the bundle
+        dialogNextPrompt.setArguments(bundlePass);
+
+        //Give control to the fragment, showing it.
+        dialogNextPrompt.show(fm,"Useless Tag");
     }
 }
