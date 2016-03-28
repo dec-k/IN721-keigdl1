@@ -77,18 +77,15 @@ public class QuestionAct extends AppCompatActivity {
             //Determine selected rdo
             if(rdoDas.isChecked()){
                 //Determine if selected rdo is equal to answer
-                if(rdoDas.getText() == curAnswer){
+                // TODO: 3/28/2016 Compare to a non-literal string. Can't use rdoDas.getText(), why? 
+                if("Das" == curAnswer){
                     //Setup new frag
                     DialogCorrect dCorrect = new DialogCorrect();
 
                     //Give control to fragment, showing it
                     dCorrect.show(fm,"Useless Tag");
                 }else{
-                    //Setup new frag
-                    DialogCorrect dCorrect = new DialogCorrect();
 
-                    //Give control to fragment, showing it
-                    dCorrect.show(fm,"Useless Tag");
                 }
             }else if(rdoDie.isChecked()){
                 if(rdoDie.getText() == curAnswer){
