@@ -35,7 +35,8 @@
         android:text="Confirm Choice"
         android:id="@+id/btnConf"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <RadioGroup
         android:layout_width="match_parent"
@@ -67,4 +68,19 @@
             android:checked="false" />
 
     </RadioGroup>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progBar"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/btnConf"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3"
+        android:layout_alignTop="@+id/btnConf"
+        android:max="11"
+        android:progress="0"
+        android:indeterminate="false" />
+
 </RelativeLayout>

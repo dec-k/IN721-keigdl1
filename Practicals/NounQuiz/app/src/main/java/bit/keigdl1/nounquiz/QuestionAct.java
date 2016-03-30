@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -189,6 +190,10 @@ public class QuestionAct extends AppCompatActivity {
 
             //Reset right/wrong boolean
             lastRight = false;
+
+            //Update Progress bar
+            ProgressBar progBar = (ProgressBar) findViewById(R.id.progBar);
+            progBar.incrementProgressBy(1);
         }
     }
 
