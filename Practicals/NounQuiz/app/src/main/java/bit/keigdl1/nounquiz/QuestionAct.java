@@ -75,7 +75,7 @@ public class QuestionAct extends AppCompatActivity {
             //Get answer
             String curAnswer = curOnQuestion.getAnswer();
 
-            //Ref rdobtns & grp
+            //Ref rdobtns
             RadioButton rdoDas = (RadioButton) findViewById(R.id.rdoDas);
             RadioButton rdoDie = (RadioButton) findViewById(R.id.rdoDie);
             RadioButton rdoDer = (RadioButton) findViewById(R.id.rdoDer);
@@ -167,6 +167,20 @@ public class QuestionAct extends AppCompatActivity {
             //Give control to result screen
             startActivity(goToResults);
         }else{
+            //Deselect all radio buttons for clarity
+            //Ref rdobtns
+            RadioButton rdoDas = (RadioButton) findViewById(R.id.rdoDas);
+            RadioButton rdoDie = (RadioButton) findViewById(R.id.rdoDie);
+            RadioButton rdoDer = (RadioButton) findViewById(R.id.rdoDer);
+
+            if(rdoDas.isChecked()){
+                rdoDas.setChecked(false);
+            }else if (rdoDie.isChecked()){
+                rdoDie.setChecked(false);
+            }else if(rdoDer.isChecked()){
+                rdoDer.setChecked(false);
+            }
+
             //Get references to the required form component
             ImageView iv = (ImageView)findViewById(R.id.imgQuestion);
 
@@ -186,10 +200,6 @@ public class QuestionAct extends AppCompatActivity {
         }
     }
 
-    public void goToResults(){
-
-    }
-
     public void DismissFragment(){
         //Dismiss screen fragment
         dialogNextPrompt.dismiss();
@@ -204,9 +214,9 @@ public class QuestionAct extends AppCompatActivity {
     public void manageAnswer(boolean answer){
         //Load up bundle with the correct type of string
         if(answer){
-            bundlePass.putString("TypeOfFragment","Correct Answer!");
+            bundlePass.putString("TypeOfFragment", "Correct Answer!");
         }else{
-            bundlePass.putString("TypeOfFragment","Wrong Answer...");
+            bundlePass.putString("TypeOfFragment", "Wrong Answer...");
         }
 
         //Set the arguments of the fragment to contain the bundle

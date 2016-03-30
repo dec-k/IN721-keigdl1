@@ -17,7 +17,6 @@ public class DialogNext extends DialogFragment {
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState){
         //Retrieve args from the passed in bundle
         String typeOfFragment = getArguments().getString("TypeOfFragment");
-        boolean rightWrong = getArguments().getBoolean("RightWrong");
 
         //Get a ref to the dialog window and provide it a title
         Dialog dWin = getDialog();
