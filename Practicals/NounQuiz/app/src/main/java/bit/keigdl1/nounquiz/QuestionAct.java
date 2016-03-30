@@ -22,6 +22,8 @@ public class QuestionAct extends AppCompatActivity {
     int scoreTotal;
     //Variable for which question the quiz is currently on
     int currentlyOn;
+    //Variable which holds wether or not the user got the last question right
+    boolean lastRight;
     //Get resources as a var
     Resources res;
     //Create fm & fragments
@@ -50,6 +52,7 @@ public class QuestionAct extends AppCompatActivity {
         //Initialise currentlyOn and score
         scoreTotal = 0;
         currentlyOn = 0;
+        lastRight = false;
 
         //Run genQuestions so the question list gets loaded and shuffled correctly
         genQuestions();
@@ -82,19 +85,22 @@ public class QuestionAct extends AppCompatActivity {
                 //Determine if selected rdo is equal to answer
                 if("Das" == curAnswer){
                     //Call manageAnswer to handle fragment transitioning
-                    manageAnswer(true);
+                    lastRight = true;
+                    manageAnswer(lastRight);
                 }else{
                     manageAnswer(false);
                 }
             }else if(rdoDie.isChecked()){
                 if("Die" == curAnswer){
-                    manageAnswer(true);
+                    lastRight = true;
+                    manageAnswer(lastRight);
                 }else{
                     manageAnswer(false);
                 }
             }else if(rdoDer.isChecked()){
                 if("Der" == curAnswer){
-                    manageAnswer(true);
+                    lastRight = true;
+                    manageAnswer(lastRight);
                 }else{
                     manageAnswer(false);
                 }
@@ -169,6 +175,14 @@ public class QuestionAct extends AppCompatActivity {
 
             //Use that questions image accessors to get a bitmap of its image and draw it to the iv
             iv.setImageDrawable(curOnQuestion.getImage());
+
+            //Determine if the user got the last question correct
+            if(lastRight == true){
+                scoreTotal++;
+            }
+
+            //Reset right/wrong boolean
+            lastRight = false;
         }
     }
 
@@ -190,8 +204,6 @@ public class QuestionAct extends AppCompatActivity {
     public void manageAnswer(boolean answer){
         //Load up bundle with the correct type of string
         if(answer){
-            //Increase score
-            scoreTotal++;
             bundlePass.putString("TypeOfFragment","Correct Answer!");
         }else{
             bundlePass.putString("TypeOfFragment","Wrong Answer...");

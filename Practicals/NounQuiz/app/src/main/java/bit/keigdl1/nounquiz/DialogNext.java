@@ -15,8 +15,10 @@ import android.widget.TextView;
 public class DialogNext extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState){
-        //Retrieve arg from the passed in bundle
+        //Retrieve args from the passed in bundle
         String typeOfFragment = getArguments().getString("TypeOfFragment");
+        boolean rightWrong = getArguments().getBoolean("RightWrong");
+
         //Get a ref to the dialog window and provide it a title
         Dialog dWin = getDialog();
         dWin.setTitle(typeOfFragment);
