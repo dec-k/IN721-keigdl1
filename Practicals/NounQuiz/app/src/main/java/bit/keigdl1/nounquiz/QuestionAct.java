@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -167,19 +168,10 @@ public class QuestionAct extends AppCompatActivity {
             //Give control to result screen
             startActivity(goToResults);
         }else{
-            //Deselect all radio buttons for clarity
-            //Ref rdobtns
-            RadioButton rdoDas = (RadioButton) findViewById(R.id.rdoDas);
-            RadioButton rdoDie = (RadioButton) findViewById(R.id.rdoDie);
-            RadioButton rdoDer = (RadioButton) findViewById(R.id.rdoDer);
-
-            if(rdoDas.isChecked()){
-                rdoDas.setChecked(false);
-            }else if (rdoDie.isChecked()){
-                rdoDie.setChecked(false);
-            }else if(rdoDer.isChecked()){
-                rdoDer.setChecked(false);
-            }
+            //Ref the radio group, then run clearCheck to removed whatever item it has
+            //that is currently checked.
+            RadioGroup rdoGrp = (RadioGroup)findViewById(R.id.radioGroup);
+            rdoGrp.clearCheck();
 
             //Get references to the required form component
             ImageView iv = (ImageView)findViewById(R.id.imgQuestion);
