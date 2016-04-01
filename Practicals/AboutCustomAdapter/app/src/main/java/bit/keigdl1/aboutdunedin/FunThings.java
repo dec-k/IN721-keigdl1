@@ -1,11 +1,17 @@
 package bit.keigdl1.aboutdunedin;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class FunThings extends AppCompatActivity {
     //Fun things array declaration
@@ -57,5 +63,35 @@ public class FunThings extends AppCompatActivity {
         funThingsArray[7] = new FunThing("Speights Brewery",speights);
         funThingsArray[8] = new FunThing("St. Kilda Beach",stkilda);
         funThingsArray[9] = new FunThing("Taeri Gorge Railway",taeri);
+    }
+
+    public class CustomAdapter extends ArrayAdapter<FunThing>{
+
+        public CustomAdapter(Context context, int resource, FunThing[] objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup container){
+            //Make inflater to get turn XML into form controls
+            LayoutInflater inflater = LayoutInflater.from(FunThings.this);
+
+            //Inflate custom view
+            View customView = inflater.inflate(R.layout.custom_list_item, container, false);
+
+            //Ref to the controls OF THE CUSTOM VIEW
+            ImageView iv = (ImageView) customView.findViewById(R.id.ivFun);
+            TextView tv = (TextView) customView.findViewById(R.id.txtFun);
+
+            //Get current input item (an instance of FunThing)
+            FunThing currentItem = getItem(position);
+
+            //Populate controls defined above with the instance data
+            iv.setImageDrawable(currentItem.ftImg);
+            tv.setText(currentItem.ftName);
+
+            //return view
+            return customView;
+        }
     }
 }
