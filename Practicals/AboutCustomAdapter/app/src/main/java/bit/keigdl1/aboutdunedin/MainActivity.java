@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
+    //Fun things array declaration
+    FunThing[] funThingsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Setup the navigation menu
         setupNavOptionsList();
+
+        //Generate all the fun things
+        generateArrayOfFunThings();
 
         //Get ref to listview
         ListView listOptions = (ListView) findViewById(R.id.listOptions);
@@ -41,7 +46,20 @@ public class MainActivity extends AppCompatActivity {
         Drawable stkilda = rm.getDrawable(R.drawable.st_kilda_beach);
         Drawable taeri = rm.getDrawable(R.drawable.taeri_gorge_railway);
 
+        //instantiate funthingsarray
+        funThingsArray = new FunThing[10];
 
+        //load it up homesauce
+        funThingsArray[0] = new FunThing("Larnach Castle", larnach);
+        funThingsArray[1] = new FunThing("Moana Pool", moana);
+        funThingsArray[2] = new FunThing("Monarch", monarch);
+        funThingsArray[3] = new FunThing("The Octagon", octagon);
+        funThingsArray[4] = new FunThing("Olveston", olveston);
+        funThingsArray[5] = new FunThing("Peninsula", peninsula);
+        funThingsArray[6] = new FunThing("Salt-water Pools", saltwater);
+        funThingsArray[7] = new FunThing("Speights Brewery",speights);
+        funThingsArray[8] = new FunThing("St. Kilda Beach",stkilda);
+        funThingsArray[9] = new FunThing("Taeri Gorge Railway",taeri);
     }
 
     public void setupNavOptionsList() {
