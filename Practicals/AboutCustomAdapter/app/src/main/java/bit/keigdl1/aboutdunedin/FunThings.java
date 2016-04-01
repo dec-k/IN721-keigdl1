@@ -4,6 +4,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class FunThings extends AppCompatActivity {
     //Fun things array declaration
@@ -16,6 +18,13 @@ public class FunThings extends AppCompatActivity {
 
         //Generate a whole lot of fun things
         generateArrayOfFunThings();
+
+        //Create an array adapter
+        ArrayAdapter<FunThing> ftAdapter = new ArrayAdapter<FunThing>(this, R.layout.custom_list_item, funThingsArray);
+
+        //Bind lv to adapter
+        ListView lvFun = (ListView) findViewById(R.id.lvFunStuff);
+        lvFun.setAdapter(ftAdapter);
     }
 
     public void generateArrayOfFunThings(){
