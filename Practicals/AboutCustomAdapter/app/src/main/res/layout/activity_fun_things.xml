@@ -19,12 +19,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <ImageView
+    <ListView
         android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:id="@+id/imageView3"
-        android:background="@drawable/monarch"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvFunStuff"
         android:layout_below="@+id/textView4"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
