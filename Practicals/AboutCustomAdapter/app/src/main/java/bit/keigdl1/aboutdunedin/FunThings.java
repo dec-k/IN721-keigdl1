@@ -26,7 +26,7 @@ public class FunThings extends AppCompatActivity {
         generateArrayOfFunThings();
 
         //Create an array adapter
-        ArrayAdapter<FunThing> ftAdapter = new ArrayAdapter<FunThing>(this, R.layout.custom_list_item, funThingsArray);
+        CustomAdapter ftAdapter = new CustomAdapter(this, R.layout.custom_list_item, funThingsArray);
 
         //Bind lv to adapter
         ListView lvFun = (ListView) findViewById(R.id.lvFunStuff);
