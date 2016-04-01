@@ -1,6 +1,8 @@
 package bit.keigdl1.aboutdunedin;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +23,25 @@ public class MainActivity extends AppCompatActivity {
         //Get ref to listview
         ListView listOptions = (ListView) findViewById(R.id.listOptions);
         listOptions.setOnItemClickListener(new ListViewChangeIntentHandler());
+    }
+
+    public void generateArrayOfFunThings(){
+        //Grab the drawables using a Resource getter thing (thanks android)
+        Resources rm = getResources();
+
+        //lots of drawables
+        Drawable larnach = rm.getDrawable(R.drawable.larnach_castle);
+        Drawable moana = rm.getDrawable(R.drawable.moana_pool);
+        Drawable monarch = rm.getDrawable(R.drawable.monarch);
+        Drawable octagon = rm.getDrawable(R.drawable.octagon);
+        Drawable olveston = rm.getDrawable(R.drawable.olveston);
+        Drawable peninsula = rm.getDrawable(R.drawable.peninsula);
+        Drawable saltwater = rm.getDrawable(R.drawable.salt_water_pool);
+        Drawable speights = rm.getDrawable(R.drawable.speights_brewery);
+        Drawable stkilda = rm.getDrawable(R.drawable.st_kilda_beach);
+        Drawable taeri = rm.getDrawable(R.drawable.taeri_gorge_railway);
+
+
     }
 
     public void setupNavOptionsList() {
