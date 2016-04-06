@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnShowResults = (Button)findViewById(R.id.btnShowCities);
 
         //Bind button to a click handler
-        btnShowResults.setOnClickListener(new cityClickHandler);
+        btnShowResults.setOnClickListener(new cityClickHandler());
     }
 
     public void createTable(){
@@ -107,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateListView(){
+        //Create an arraylist of cities
+        ArrayList<String> cities = new ArrayList<String>();
+
         //Get a reference to the spinner first
         Spinner spinner = (Spinner)findViewById(R.id.spinnerCountries);
 
@@ -114,10 +118,43 @@ public class MainActivity extends AppCompatActivity {
         String selectedText = spinner.getSelectedItem().toString();
 
         //Run a method to build a select string, based on the value pulled from the spinner
-        getCitiesOfCountry(selectedText);
+        cities = getCitiesOfCountry(selectedText);
+
+        //Create an adapter for the listview
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,R.layout.support_simple_spinner_dropdown_item,cities);
+
+        //Ref & bind listview
+        ListView lv = (ListView)findViewById(R.id.listView);
+        lv.setAdapter(adapter);
+
     }
 
     public ArrayList<String> getCitiesOfCountry(String selectedCountry){
-        
+        //Declare a new arraylist
+        ArrayList<String> cities = new ArrayList<String>();
+
+        //Select all data in one blob.
+        String selectQuery = "SELECT cityName FROM tblCity WHERE countryName = " + "\"" + selectedCountry + "\"";
+
+        //Create a cursor object
+        Cursor recordSet = db.rawQuery(selectQuery, null);
+
+        int recordCount = recordSet.getCount();
+
+        int countryNameIndex = recordSet.getColumnIndex("countryName");
+
+        recordSet.moveToFirst();
+
+        for(int r=0; r < recordCount; r++){
+            String countryName = recordSet.getString(countryNameIndex);
+            //Add country name to list
+            cities.add(countryName);
+
+            //move to the next entry in the results of the select query
+            recordSet.moveToNext();
+        }
+
+        //return list of countries for the dropdown selector
+        return cities;
     }
 }
