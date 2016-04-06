@@ -134,21 +134,21 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> cities = new ArrayList<String>();
 
         //Select all data in one blob.
-        String selectQuery = "SELECT cityName FROM tblCity WHERE countryName = " + "\"" + selectedCountry + "\"";
+        String selectQuery = "SELECT DISTINCT cityName FROM tblCity WHERE countryName = " + "\"" + selectedCountry + "\"";
 
         //Create a cursor object
         Cursor recordSet = db.rawQuery(selectQuery, null);
 
         int recordCount = recordSet.getCount();
 
-        int countryNameIndex = recordSet.getColumnIndex("countryName");
+        int cityNameIndex = recordSet.getColumnIndex("cityName");
 
         recordSet.moveToFirst();
 
         for(int r=0; r < recordCount; r++){
-            String countryName = recordSet.getString(countryNameIndex);
+            String cityName = recordSet.getString(cityNameIndex);
             //Add country name to list
-            cities.add(countryName);
+            cities.add(cityName);
 
             //move to the next entry in the results of the select query
             recordSet.moveToNext();
