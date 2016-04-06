@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         //Make array adapter
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,cityList);
 
+        //bind adapter to lv
+        ListView lv = (ListView)findViewById(R.id.lvStuff);
+        lv.setAdapter(adapter);
     }
 
     public void generateCityList(){
