@@ -4,7 +4,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -22,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
         createTable();
         populateTable();
 
-        //Populate form controls at load
+        //Populate dropdown box at form load
         populateDropdown();
+
+        //Ref the button
+        Button btnShowResults = (Button)findViewById(R.id.btnShowCities);
+
+        //Bind button to a click handler
+        btnShowResults.setOnClickListener(new cityClickHandler);
     }
 
     public void createTable(){
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         String selectQuery = "SELECT DISTINCT countryName FROM tblCity";
 
         //Create a cursor object
-        Cursor recordSet = db.rawQuery(selectQuery,null);
+        Cursor recordSet = db.rawQuery(selectQuery, null);
 
         int recordCount = recordSet.getCount();
 
@@ -88,5 +96,28 @@ public class MainActivity extends AppCompatActivity {
 
         //return list of countries for the dropdown selector
         return countries;
+    }
+
+    public class cityClickHandler implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            //Call method to output all matching countries into the listview
+            populateListView();
+        }
+    }
+
+    public void populateListView(){
+        //Get a reference to the spinner first
+        Spinner spinner = (Spinner)findViewById(R.id.spinnerCountries);
+
+        //Extract the currently selected item from the spinner
+        String selectedText = spinner.getSelectedItem().toString();
+
+        //Run a method to build a select string, based on the value pulled from the spinner
+        getCitiesOfCountry(selectedText);
+    }
+
+    public ArrayList<String> getCitiesOfCountry(String selectedCountry){
+        
     }
 }
