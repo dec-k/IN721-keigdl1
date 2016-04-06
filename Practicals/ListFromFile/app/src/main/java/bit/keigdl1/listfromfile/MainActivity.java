@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //instantiate citylist
+        cityList = new ArrayList<String>();
+
         //Call list generator method
         generateCityList();
 
@@ -33,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateCityList(){
-        //instantiate citylist
-        ArrayList<String> cityList = new ArrayList<>();
-
         //Asset file name
         String assetFileName = "citiesoftheworld.txt";
 
