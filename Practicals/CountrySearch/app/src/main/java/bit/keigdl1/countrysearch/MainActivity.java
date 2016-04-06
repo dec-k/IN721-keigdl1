@@ -79,11 +79,14 @@ public class MainActivity extends AppCompatActivity {
 
         for(int r=0; r < recordCount; r++){
             String countryName = recordSet.getString(countryNameIndex);
+            //Add country name to list
             countries.add(countryName);
 
+            //move to the next entry in the results of the select query
             recordSet.moveToNext();
         }
 
+        //return list of countries for the dropdown selector
         return countries;
     }
 }
