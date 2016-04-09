@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         //The asset filename as a string
         String assetFileName = fileName;
 
+        //String which will be loaded with JSON data and returned
+        String JSONInput = "";
+
         //Create an asset manager
         AssetManager am = getAssets();
 
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             inputStream.close();
 
             //Convert that byte array into a very very long string
-            String JSONInput = new String(JSONBuffer);
+            JSONInput = new String(JSONBuffer);
 
             //toast debug
             Toast toast = Toast.makeText(this, JSONInput, Toast.LENGTH_LONG);
@@ -48,5 +51,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //Return the json input string
+        return JSONInput;
     }
 }
