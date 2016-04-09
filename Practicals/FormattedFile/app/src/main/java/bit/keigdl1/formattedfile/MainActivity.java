@@ -44,10 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Convert that byte array into a very very long string
             JSONInput = new String(JSONBuffer);
-
-            //toast debug
-            Toast toast = Toast.makeText(this, JSONInput, Toast.LENGTH_LONG);
-            toast.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
