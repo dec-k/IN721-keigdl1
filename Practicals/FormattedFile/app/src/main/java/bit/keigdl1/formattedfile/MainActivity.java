@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -61,9 +63,21 @@ public class MainActivity extends AppCompatActivity {
         //Setup a return list -- debug
         ArrayList<String> outputItems = new ArrayList<String>();
 
-        //Create a new JSONObject from the passed in string
-        //Why is this line erroring?
-        JSONObject eventData = new JSONObject(JSONInput);
+        try {
+            //Create a new JSONObject from the passed in string
+            JSONObject eventData = new JSONObject(JSONInput);
+
+            //Get the value portion of the specified object. Use the correct key!
+            JSONArray dataArray = eventData.getJSONArray("events");
+
+            //DEBUG: Get the object in the first slot
+            JSONObject firstSlotItem = dataArray.getJSONObject(1);
+
+            //DEBUG: Toast output
+            Toast.makeText(this,firstSlotItem.toString(),Toast.LENGTH_SHORT).show();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         //Give the return list -- debug
         return outputItems;
