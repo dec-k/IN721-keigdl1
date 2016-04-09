@@ -5,19 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    //Attributes
-    public static String JSONFileName = "dunedin_events.json";
+    //Filename to get json data from
+    public static final String JSONFileName = "dunedin_events.json";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        makeJSONString(JSONFileName);
+        //Get the specified filename as a JSON string and convert it to an ArrayList
+        jStringToArray(makeJSONString(JSONFileName));
     }
 
     public String makeJSONString(String fileName){
@@ -30,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         //Create an asset manager
         AssetManager am = getAssets();
 
+        //Mandatory try-catch. Java is strange.
         try {
             //Create an input stream so we can access the file's contents in a raw form
             InputStream inputStream = am.open(assetFileName);
@@ -50,5 +55,17 @@ public class MainActivity extends AppCompatActivity {
 
         //Return the json input string
         return JSONInput;
+    }
+
+    public ArrayList<String> jStringToArray(String JSONInput){
+        //Setup a return list -- debug
+        ArrayList<String> outputItems = new ArrayList<String>();
+
+        //Create a new JSONObject from the passed in string
+        //Why is this line erroring?
+        JSONObject eventData = new JSONObject(JSONInput);
+
+        //Give the return list -- debug
+        return outputItems;
     }
 }
