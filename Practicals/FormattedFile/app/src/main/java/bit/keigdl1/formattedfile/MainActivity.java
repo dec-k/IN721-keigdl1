@@ -130,4 +130,37 @@ public class MainActivity extends AppCompatActivity {
         //Give the return list
         return outputItems;
     }
+
+    public void eventToast(String JSONInput){
+        //Setup a return list
+        ArrayList<String> outputItems = new ArrayList<String>();
+
+        try {
+            //Create a new JSONObject from the passed in string
+            JSONObject eventData = new JSONObject(JSONInput);
+
+            //Save the event object by its key (events)
+            JSONObject eventObject = eventData.getJSONObject("events");
+
+            //Now get the 'value' of the above object (which is an array called 'event')
+            JSONArray objectArray = eventObject.getJSONArray("event");
+
+            //Get a count of the amount of array items to loop through
+            int nEvents = objectArray.length();
+
+            //Loop through the objectArray
+            for (int i=0; i < nEvents; i++){
+                //Grab an element from the array
+                JSONObject currentEventObject = objectArray.getJSONObject(i);
+
+                //Access a specific key of that object (title)
+                String eventName = currentEventObject.getString("title");
+
+                //Add that event name to the list
+                outputItems.add(eventName);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
