@@ -67,11 +67,14 @@ public class MainActivity extends AppCompatActivity {
             //Create a new JSONObject from the passed in string
             JSONObject eventData = new JSONObject(JSONInput);
 
-            //Get the value portion of the specified object. Use the correct key!
-            JSONArray dataArray = eventData.getJSONArray("events");
+            //Save the event object by its key (events)
+            JSONObject eventObject = eventData.getJSONObject("events");
+
+            //Now get the 'value' of the above object (which is an array called 'event')
+            JSONArray objectArray = eventObject.getJSONArray("event");
 
             //DEBUG: Get the object in the first slot
-            JSONObject firstSlotItem = dataArray.getJSONObject(1);
+            JSONObject firstSlotItem = objectArray.getJSONObject(1);
 
             //DEBUG: Toast output
             Toast.makeText(this,firstSlotItem.toString(),Toast.LENGTH_SHORT).show();
