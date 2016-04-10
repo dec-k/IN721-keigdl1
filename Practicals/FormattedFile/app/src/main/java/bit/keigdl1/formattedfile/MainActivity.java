@@ -3,6 +3,8 @@ package bit.keigdl1.formattedfile;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,8 +30,22 @@ public class MainActivity extends AppCompatActivity {
         //Build a string that holds the entire JSON file
         JSONInput = makeJSONString(JSONFileName);
 
-        //Pass the json string into a method which will convert it into a standard arraylist
-        jStringToArray(JSONInput);
+        //Convert the JSON string into an arraylist of events
+        ArrayList<String> eventList = jStringToArray(JSONInput);
+
+        //Setup the listview using the above arraylist
+        populateListView(eventList);
+    }
+
+    public void populateListView(ArrayList<String> events){
+        //ref list
+        ListView eventList = (ListView)findViewById(R.id.listEvents);
+
+        //Create an adapter that uses the passed-in arraylist
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,events);
+
+        //bind adapter to list
+        eventList.setAdapter(adapter);
     }
 
     public String makeJSONString(String fileName){
@@ -92,9 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //Add that event name to the list
                 outputItems.add(eventName);
-
-                //DEBUG: Toast output
-                Toast.makeText(this,eventName,Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
             e.printStackTrace();
