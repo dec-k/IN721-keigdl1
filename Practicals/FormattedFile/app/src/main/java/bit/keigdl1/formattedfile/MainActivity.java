@@ -4,6 +4,7 @@ import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Bind handler to button
         btn.setOnClickListener(new onEventLoadHandler());
+
+        //Ref the listview
+        ListView eventList = (ListView)findViewById(R.id.listEvents);
+
+        //Bind listview click handler
+        eventList.setOnItemClickListener(new onListViewClickHandler());
+
     }
 
     public class onEventLoadHandler implements View.OnClickListener{
@@ -131,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
         return outputItems;
     }
 
-    public void eventToast(String JSONInput){
-        //Setup a return list
-        ArrayList<String> outputItems = new ArrayList<String>();
+    public void eventToast(String JSONInput, int position){
+        //ref list
+        ListView eventList = (ListView)findViewById(R.id.listEvents);
 
         try {
             //Create a new JSONObject from the passed in string
@@ -156,11 +164,26 @@ public class MainActivity extends AppCompatActivity {
                 //Access a specific key of that object (title)
                 String eventName = currentEventObject.getString("title");
 
-                //Add that event name to the list
-                outputItems.add(eventName);
+                //If listviews selected item matches the one we just pulled, pop a toast
+                if(eventName.equals(eventList.getItemAtPosition(position).toString())){
+
+                    //save the matched objects DESCRIPTION into a string
+                    String eventDescription = currentEventObject.getString("description");
+
+                    //pop the toast
+                    Toast.makeText(this,eventDescription,Toast.LENGTH_LONG).show();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }
+    }
+
+    public class onListViewClickHandler implements AdapterView.OnItemClickListener{
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //Just call toast method
+            eventToast(JSONInput, position);
         }
     }
 }
