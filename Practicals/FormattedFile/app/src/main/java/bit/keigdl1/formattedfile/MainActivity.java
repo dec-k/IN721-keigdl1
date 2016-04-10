@@ -17,13 +17,19 @@ public class MainActivity extends AppCompatActivity {
     //Filename to get json data from
     public static final String JSONFileName = "dunedin_events.json";
 
+    //String that contains a very long JSON file
+    String JSONInput = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Get the specified filename as a JSON string and convert it to an ArrayList
-        jStringToArray(makeJSONString(JSONFileName));
+        //Build a string that holds the entire JSON file
+        JSONInput = makeJSONString(JSONFileName);
+
+        //Pass the json string into a method which will convert it into a standard arraylist
+        jStringToArray(JSONInput);
     }
 
     public String makeJSONString(String fileName){
