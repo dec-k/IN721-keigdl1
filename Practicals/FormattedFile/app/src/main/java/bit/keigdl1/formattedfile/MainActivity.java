@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<String> jStringToArray(String JSONInput){
-        //Setup a return list -- debug
+        //Setup a return list
         ArrayList<String> outputItems = new ArrayList<String>();
 
         try {
@@ -79,16 +79,28 @@ public class MainActivity extends AppCompatActivity {
             //Now get the 'value' of the above object (which is an array called 'event')
             JSONArray objectArray = eventObject.getJSONArray("event");
 
-            //DEBUG: Get the object in the first slot
-            JSONObject firstSlotItem = objectArray.getJSONObject(1);
+            //Get a count of the amount of array items to loop through
+            int nEvents = objectArray.length();
 
-            //DEBUG: Toast output
-            Toast.makeText(this,firstSlotItem.toString(),Toast.LENGTH_SHORT).show();
+            //Loop through the objectArray
+            for (int i=0; i < nEvents; i++){
+                //Grab an element from the array
+                JSONObject currentEventObject = objectArray.getJSONObject(i);
+
+                //Access a specific key of that object (title)
+                String eventName = currentEventObject.getString("title");
+
+                //Add that event name to the list
+                outputItems.add(eventName);
+
+                //DEBUG: Toast output
+                Toast.makeText(this,eventName,Toast.LENGTH_SHORT).show();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        //Give the return list -- debug
+        //Give the return list
         return outputItems;
     }
 }
