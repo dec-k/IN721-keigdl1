@@ -3,7 +3,9 @@ package bit.keigdl1.formattedfile;
 import android.content.res.AssetManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -27,14 +29,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Build a string that holds the entire JSON file
-        JSONInput = makeJSONString(JSONFileName);
+        //Ref button
+        Button btn = (Button)findViewById(R.id.btnLoadList);
 
-        //Convert the JSON string into an arraylist of events
-        ArrayList<String> eventList = jStringToArray(JSONInput);
+        //Bind handler to button
+        btn.setOnClickListener(new onEventLoadHandler());
+    }
 
-        //Setup the listview using the above arraylist
-        populateListView(eventList);
+    public class onEventLoadHandler implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            //Build a string that holds the entire JSON file
+            JSONInput = makeJSONString(JSONFileName);
+
+            //Convert the JSON string into an arraylist of events
+            ArrayList<String> eventList = jStringToArray(JSONInput);
+
+            //Setup the listview using the above arraylist
+            populateListView(eventList);
+        }
     }
 
     public void populateListView(ArrayList<String> events){
