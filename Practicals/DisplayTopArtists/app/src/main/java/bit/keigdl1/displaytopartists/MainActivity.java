@@ -138,9 +138,7 @@ public class MainActivity extends AppCompatActivity {
         //method and provide it the returned string of doInBackground that we wrote above.
         @Override
         protected void onPostExecute(String fetchedString){
-            //Debug: checking api call + method works
-            Toast.makeText(MainActivity.this, fetchedString, Toast.LENGTH_LONG).show();
-            System.out.println(fetchedString);
+            
 
         }
     }
