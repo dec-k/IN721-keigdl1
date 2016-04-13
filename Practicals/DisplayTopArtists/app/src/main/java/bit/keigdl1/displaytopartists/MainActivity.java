@@ -4,7 +4,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -33,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void populateListView(ArrayList<String> events){
+        //ref list
+        ListView eventList = (ListView)findViewById(R.id.listView);
+
+        //Create an adapter that uses the passed-in arraylist
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,events);
+
+        //bind adapter to list
+        eventList.setAdapter(adapter);
+    }
+
     //Method to return a parsed-down json string as an array list
     public ArrayList<String> rawJSONToArrayList(String jInput){
         //Setup a return list
@@ -56,12 +69,15 @@ public class MainActivity extends AppCompatActivity {
                 //Grab an element from the array
                 JSONObject currentEventObject = objectArray.getJSONObject(i);
 
-                //Access a specific key of that object (title)
-                String eventName = currentEventObject.getString("name");
+                //Access a specific key of that object
+                String artistName = currentEventObject.getString("name");
                 String listenerCount = currentEventObject.getString("listeners");
 
+                //Merge two strings
+                String artAndListens = artistName + ", " + listenerCount;
+
                 //Add that event name to the list
-                outputItems.add(eventName);
+                outputItems.add(artAndListens);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         return outputItems;
     }
 
+    //Custom click handler
     class customClickHandler implements View.OnClickListener{
 
         @Override
@@ -138,7 +155,14 @@ public class MainActivity extends AppCompatActivity {
         //method and provide it the returned string of doInBackground that we wrote above.
         @Override
         protected void onPostExecute(String fetchedString){
-            
+            //Declare an arraylist
+            //Generic name because this code will likely be reused
+            ArrayList<String> aList;
+            //Run the string through a converter method to turn it into an array list
+            aList = rawJSONToArrayList(fetchedString);
+
+            //run method to fill a listview
+            populateListView(aList);
 
         }
     }
