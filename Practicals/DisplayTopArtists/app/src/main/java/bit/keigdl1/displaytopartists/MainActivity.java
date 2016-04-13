@@ -7,12 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.Console;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,44 @@ public class MainActivity extends AppCompatActivity {
         //bind
         btnShowArtists.setOnClickListener(new customClickHandler());
 
+    }
+
+    //Method to return a parsed-down json string as an array list
+    public ArrayList<String> rawJSONToArrayList(String jInput){
+        //Setup a return list
+        ArrayList<String> outputItems = new ArrayList<String>();
+
+        try {
+            //Create a new JSONObject from the passed in string
+            JSONObject eventData = new JSONObject(jInput);
+
+            //Save the event object by its key (events)
+            JSONObject eventObject = eventData.getJSONObject("artists");
+
+            //Now get the 'value' of the above object (which is an array called 'event')
+            JSONArray objectArray = eventObject.getJSONArray("artist");
+
+            //Get a count of the amount of array items to loop through
+            int nEvents = objectArray.length();
+
+            //Loop through the objectArray
+            for (int i=0; i < nEvents; i++){
+                //Grab an element from the array
+                JSONObject currentEventObject = objectArray.getJSONObject(i);
+
+                //Access a specific key of that object (title)
+                String eventName = currentEventObject.getString("name");
+                String listenerCount = currentEventObject.getString("listeners");
+
+                //Add that event name to the list
+                outputItems.add(eventName);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //Give the return list
+        return outputItems;
     }
 
     class customClickHandler implements View.OnClickListener{
