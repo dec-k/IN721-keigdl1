@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -49,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
             try{
                 //URL of the location we want to fetch json from
-                String jsonSourceURL = "http://ws.audioscrobbler.com/2.0/?" + //base url
-                        "method=chart.gettopartists&" + //method call
-                        "api_key=58384a2141a4b9737eacb9d0989b8a8c&" + //patricia's api key
-                        "format=json"; //output format
+                String jsonSourceURL = "http://ws.audioscrobbler.com/2.0/?" +
+                        "method=chart.gettopartists&limit=20&" +
+                        "api_key=5cff6bd4a02a240bbfef15567f21c45d&" +
+                        "format=json";
 
                 //Convert string to URLObject
                 URL URLObject = new URL(jsonSourceURL);
@@ -60,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 //Create httpURLconnection object that holds the url object
                 HttpURLConnection connection = (HttpURLConnection) URLObject.openConnection();
 
-                //Call connect on the urlconnect object, this pings the server being like:
-                //"ay dog you got any more of those urls?"
+                //Send url
                 connection.connect();
 
                 //Fetch response code, 200 = all good. != 200? You done goofed.
@@ -83,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //Turn the sb into a regular string
                 JSONString = sb.toString();
-                //End of try
-            }catch(Exception e){e.printStackTrace();}
+
+            }//End of try
+            catch(Exception e){e.printStackTrace();}
 
             //Return the raw json string
             return JSONString;
@@ -96,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String fetchedString){
             //Debug: checking api call + method works
             Toast.makeText(MainActivity.this, fetchedString, Toast.LENGTH_LONG).show();
+            System.out.println(fetchedString);
 
         }
     }
