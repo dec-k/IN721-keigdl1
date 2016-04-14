@@ -45,16 +45,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateListView(ArrayList<String> events){
-        //ref list
-        ListView eventList = (ListView)findViewById(R.id.listView);
+
 
         // TODO: 4/14/2016 CODE A CUSTOM ADAPTER INSTEAD OF CONCAT STRING  
 
         //Create an adapter that uses the passed-in arraylist
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,events);
 
-        //bind adapter to list
-        eventList.setAdapter(adapter);
+
     }
 
     //Method to return a parsed-down json string as an array list
@@ -136,6 +134,10 @@ public class MainActivity extends AppCompatActivity {
             }catch(Exception e){e.printStackTrace();}
 
             return bmp;
+        }
+
+        protected void onPostExecute(Bitmap bmp){
+            artistImageView.setImageBitmap(bmp);
         }
     }
 
@@ -223,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
             }catch (Exception e){e.printStackTrace();}
 
             //Create an instance of our 2nd async class that deals with images
-            LastFmAsync lastfmAsync = new lastfmAsync();
+            LastFmAsync lastfmAsync = new LastFmAsync();
+            //Pass the found url into the second async class, which will handle its drawing.
             lastfmAsync.execute(artistPictureURL);
         }
     }
