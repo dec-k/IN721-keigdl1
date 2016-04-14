@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    //Is there a better place to put this?
+    //Declare things that must be public.
     String artistPictureURL;
     ImageView artistImageView;
 
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Now get the 'value' of the above object (which is an array called 'event')
             JSONArray objectArray = eventObject.getJSONArray("artist");
-
 
             //Get a count of the amount of array items to loop through
             int nEvents = objectArray.length();
@@ -103,25 +102,33 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Bitmap doInBackground(String... params) {
+            //Read in the first param to get the image URL again
             String pictureURL = params[0];
+            //Create an empty bitmap which will be returned and dealt
+            //with in onPostExecute().
             Bitmap bmp = null;
 
             try {
+                //Establish connection to the picture URL
                 URL urlObject = new URL(pictureURL);
                 HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
                 connection.connect();
 
+                //Verify Response Code
                 int responseCode = connection.getResponseCode();
                 if(responseCode == 200){
+                    //Using bitmapFactory.decodeStream, turn the URL into its corresponding image.
                     InputStream inputStream = connection.getInputStream();
                     bmp = BitmapFactory.decodeStream(inputStream);
                 }
             }catch(Exception e){e.printStackTrace();}
 
+            //Return the fully formed image now.
             return bmp;
         }
 
         protected void onPostExecute(Bitmap bmp){
+            //Set the global imageview to the argument of this method
             artistImageView.setImageBitmap(bmp);
         }
     }
