@@ -1,11 +1,14 @@
 package bit.keigdl1.displaytopartists;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +25,9 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    //Is there a better place to put this?
+    String artistPictureURL;
+    ImageView artistImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         Button btnShowArtists = (Button)findViewById(R.id.btnShowArtists);
         //bind
         btnShowArtists.setOnClickListener(new customClickHandler());
+
+        //ref imageview
+        artistImageView = (ImageView)findViewById(R.id.imageView);
 
     }
 
@@ -63,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             //Now get the 'value' of the above object (which is an array called 'event')
             JSONArray objectArray = eventObject.getJSONArray("artist");
 
+
             //Get a count of the amount of array items to loop through
             int nEvents = objectArray.length();
 
@@ -74,9 +84,11 @@ public class MainActivity extends AppCompatActivity {
                 //Access a specific key of that object
                 String artistName = currentEventObject.getString("name");
                 String listenerCount = currentEventObject.getString("listeners");
+                //Debug: also pulls image name as string
+                String imgString = currentEventObject.getString("image");
 
                 //Merge two strings
-                String artAndListens = artistName + ", " + listenerCount;
+                String artAndListens = artistName + ", " + listenerCount + ", " + imgString;
 
                 //Add that event name to the list
                 outputItems.add(artAndListens);
@@ -102,6 +114,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Second asynctask used to sort out the image
+    //This basically mimics the android dev example
+    class LastFmAsync extends AsyncTask<String,Void,Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            String pictureURL = params[0];
+            Bitmap bmp = null;
+
+            try {
+                URL urlObject = new URL(pictureURL);
+                HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
+                connection.connect();
+
+                int responseCode = connection.getResponseCode();
+                if(responseCode == 200){
+                    InputStream inputStream = connection.getInputStream();
+                    bmp = BitmapFactory.decodeStream(inputStream);
+                }
+            }catch(Exception e){e.printStackTrace();}
+
+            return bmp;
+        }
+    }
+
     //Inner async class
     class AsyncAPIShowRawJSON extends AsyncTask<Void,Void,String>{
 
@@ -113,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             try{
                 //URL of the location we want to fetch json from
                 String jsonSourceURL = "http://ws.audioscrobbler.com/2.0/?" +
-                        "method=chart.gettopartists&limit=20&" +
+                        "method=chart.gettopartists&limit=1&" +
                         "api_key=5cff6bd4a02a240bbfef15567f21c45d&" +
                         "format=json";
 
@@ -157,15 +194,37 @@ public class MainActivity extends AppCompatActivity {
         //method and provide it the returned string of doInBackground that we wrote above.
         @Override
         protected void onPostExecute(String fetchedString){
-            //Declare an arraylist
-            //Generic name because this code will likely be reused
-            ArrayList<String> aList;
-            //Run the string through a converter method to turn it into an array list
-            aList = rawJSONToArrayList(fetchedString);
+            //In this post execute, we will eventually pass to another async task that will
+            //sort out how to display the image.
+            try{
+                //Strip away the layers of JSON data until we get to the level we want.
+                JSONObject jData = new JSONObject(fetchedString); //raw
+                JSONObject artistObject = jData.getJSONObject("artists");
+                JSONArray artistArray = artistObject.getJSONArray("artist");
 
-            //run method to fill a listview
-            populateListView(aList);
+                //Retrieve the first object, we only need the top 1 result.
+                JSONObject artistTop = artistArray.getJSONObject(0);
 
+                //Last.fm stores multiple sizes of its artist pictures inside an array which
+                //forms the 'value' of the key 'image'. So we have to go even deeper.
+                JSONArray artistImageArray = artistTop.getJSONArray("image");
+
+                //Iterate over the list of IMAGES in the array, the size we want is "large".
+                for(int i = 0; i < artistImageArray.length();i++){
+                    JSONObject img = artistImageArray.getJSONObject(i);
+                    //Check if the image we just got ahold of is 'large'.
+                    if(img.getString("size").equals("large")){
+                        //in last.fm json, #text under the image array holds the url of the picture we want!
+                        artistPictureURL = img.getString("#text");
+                    }
+                }
+
+
+            }catch (Exception e){e.printStackTrace();}
+
+            //Create an instance of our 2nd async class that deals with images
+            LastFmAsync lastfmAsync = new lastfmAsync();
+            lastfmAsync.execute(artistPictureURL);
         }
     }
 }

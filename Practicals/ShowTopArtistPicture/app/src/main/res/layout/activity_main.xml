@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Top 20 Artists"
+        android:text="Show Top Artist Picture"
         android:id="@+id/btnShowArtists"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -20,11 +20,11 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <ListView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listView"
+        android:id="@+id/imageView"
         android:layout_below="@+id/btnShowArtists"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
