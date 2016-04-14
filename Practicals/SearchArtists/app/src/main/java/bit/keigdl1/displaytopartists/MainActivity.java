@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             JSONObject eventData = new JSONObject(jInput);
 
             //Save the event object by its key (events)
-            JSONObject eventObject = eventData.getJSONObject("artists");
+            JSONObject eventObject = eventData.getJSONObject("similarartists");
 
             //Now get the 'value' of the above object (which is an array called 'event')
             JSONArray objectArray = eventObject.getJSONArray("artist");
@@ -73,10 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
                 //Access a specific key of that object
                 String artistName = currentEventObject.getString("name");
-                String listenerCount = currentEventObject.getString("listeners");
 
                 //Merge two strings
-                String artAndListens = artistName + ", " + listenerCount;
+                String artAndListens = artistName;
 
                 //Add that event name to the list
                 outputItems.add(artAndListens);
@@ -94,6 +94,11 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            //ref edit text
+            EditText userInput = (EditText)findViewById(R.id.editArtist);
+            //save userinput text into a var
+            String userInputString = userInput.getText().toString();
+
             //Create secondary thread to make an API request
             AsyncAPIShowRawJSON APIThread = new AsyncAPIShowRawJSON();
 
