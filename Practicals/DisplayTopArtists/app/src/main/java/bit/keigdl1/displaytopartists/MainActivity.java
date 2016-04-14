@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         //ref list
         ListView eventList = (ListView)findViewById(R.id.listView);
 
+        // TODO: 4/14/2016 CODE A CUSTOM ADAPTER INSTEAD OF CONCAT STRING  
+
         //Create an adapter that uses the passed-in arraylist
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,events);
 
