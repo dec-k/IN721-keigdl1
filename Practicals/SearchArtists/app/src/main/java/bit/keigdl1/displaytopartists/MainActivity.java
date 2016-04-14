@@ -103,17 +103,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Inner async class
-    class AsyncAPIShowRawJSON extends AsyncTask<Void,Void,String>{
+    class AsyncAPIShowRawJSON extends AsyncTask<String,Void,String>{
 
         @Override
-        protected String doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
             //Declare json string, this will eventually return a raw json string
             String JSONString = null;
 
             try{
                 //URL of the location we want to fetch json from
                 String jsonSourceURL = "http://ws.audioscrobbler.com/2.0/?" +
-                        "method=chart.gettopartists&limit=20&" +
+                        "method=artist.getSimilar&artist=" + params +"&limit=10&" +
                         "api_key=5cff6bd4a02a240bbfef15567f21c45d&" +
                         "format=json";
 
