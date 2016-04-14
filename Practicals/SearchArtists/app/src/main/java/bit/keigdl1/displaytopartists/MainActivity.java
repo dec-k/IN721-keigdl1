@@ -94,10 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            //ref edit text
-            EditText userInput = (EditText)findViewById(R.id.editArtist);
-            //save userinput text into a var
-            String userInputString = userInput.getText().toString();
+
 
             //Create secondary thread to make an API request
             AsyncAPIShowRawJSON APIThread = new AsyncAPIShowRawJSON();
@@ -109,6 +106,17 @@ public class MainActivity extends AppCompatActivity {
 
     //Inner async class
     class AsyncAPIShowRawJSON extends AsyncTask<String,Void,String>{
+        String userInputString;
+
+        @Override
+        protected void onPreExecute (){
+            //ref edit text
+            EditText txtUserInput = (EditText)findViewById(R.id.editArtist);
+
+            //save userinput text into a var
+            userInputString = txtUserInput.getText().toString();
+        }
+
 
         @Override
         protected String doInBackground(String... params) {
@@ -118,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             try{
                 //URL of the location we want to fetch json from
                 String jsonSourceURL = "http://ws.audioscrobbler.com/2.0/?" +
-                        "method=artist.getSimilar&artist=" + params +"&limit=10&" +
+                        "method=artist.getSimilar&artist=" + userInputString +"&limit=10&" +
                         "api_key=5cff6bd4a02a240bbfef15567f21c45d&" +
                         "format=json";
 
