@@ -6,18 +6,14 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -36,23 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
         //Ref btn
         Button btnShowArtists = (Button)findViewById(R.id.btnShowArtists);
+
         //bind
         btnShowArtists.setOnClickListener(new customClickHandler());
 
         //ref imageview
         artistImageView = (ImageView)findViewById(R.id.imageView);
-
-    }
-
-    public void populateListView(ArrayList<String> events){
-
-
-        // TODO: 4/14/2016 CODE A CUSTOM ADAPTER INSTEAD OF CONCAT STRING  
-
-        //Create an adapter that uses the passed-in arraylist
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,events);
-
-
     }
 
     //Method to return a parsed-down json string as an array list
