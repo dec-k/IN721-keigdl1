@@ -3,6 +3,7 @@ package bit.keigdl1.teleportertour;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -134,15 +135,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String extractCityFromJson(String jString){
-        String retCity = null;
+        String retCity = "";
 
         try{
-            //Create object of city
-            JSONObject cData = new JSONObject(jString);
+            JSONObject cObject = new JSONObject(jString);
 
             //Pluck some vals out of it
-            String cName = cData.getString("geoplugin_place");
-            String cCountryCode = cData.getString("geoplugin_countryCode");
+            String cName = cObject.getString("geoplugin_place");
+            String cCountryCode = cObject.getString("geoplugin_countryCode");
 
             //build return string
             retCity = cName + ", " + cCountryCode;
