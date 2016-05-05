@@ -37,11 +37,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="0.000"
         android:id="@+id/txtLat"
-        android:textSize="35dp"
+        android:textSize="32dp"
         android:textStyle="italic"
+        android:gravity="left"
         android:layout_below="@+id/btnTele"
-        android:layout_alignLeft="@+id/txtLong"
-        android:layout_alignStart="@+id/txtLong" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,11 +61,12 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="0.000"
         android:id="@+id/txtLong"
-        android:textSize="35dp"
+        android:textSize="32dp"
+        android:textStyle="italic"
+        android:gravity="right"
         android:layout_alignBottom="@+id/textView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:textStyle="italic" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
