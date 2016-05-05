@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             //Setup async processing to get nearby city and display.
-            AsyncFetchNearestCity APIThread = new AsyncFetchNearestCity();
+            AsyncFetchNearestCityNoFail APIThread = new AsyncFetchNearestCityNoFail();
 
             //Execute async call
             APIThread.execute();
@@ -134,7 +134,75 @@ public class MainActivity extends AppCompatActivity {
 
             populateCityName(cData);
 
-            populateLatLng(lat,lng);
+            populateLatLng(lat, lng);
+        }
+    }
+
+    class AsyncFetchNearestCityNoFail extends AsyncTask<String,Void,String> {
+        double lat;
+        double lng;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            String jString = "[[]]";
+
+            while(jString.equals("[[]]")){
+                //Generate lat and lng vals
+                lat = genLocParameter(90);
+                lng = genLocParameter(180);
+
+                try {
+
+                    //Url of where we retrieve json data from.
+                    String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
+                            "lat=" + lat +
+                            "&long=" + lng +
+                            "&format=json";
+
+                    //Create a url object
+                    URL URLObject = new URL(requestURL);
+
+                    //Create http url connection
+                    HttpURLConnection connection = (HttpURLConnection)URLObject.openConnection();
+
+                    //Send url
+                    connection.connect();
+
+                    //Behold, the joys of java.
+                    InputStream is = connection.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(is);
+                    BufferedReader br = new BufferedReader(isr);
+
+                    //Read input into var
+                    String responseString;
+                    StringBuilder sb = new StringBuilder();
+
+                    //Step through retrieved json and add it to sb
+                    while((responseString = br.readLine()) != null){
+                        sb = sb.append(responseString);
+                    }
+
+                    //turn the sb to reg string
+                    jString = sb.toString();
+
+                }
+                catch(Exception e){e.printStackTrace();}
+            }
+
+
+
+            return jString;
+        }
+
+        @Override
+        protected void onPostExecute(String fetchedString){
+            String cData = extractCityFromJson(fetchedString);
+
+            populateCityName(cData);
+
+            populateLatLng(lat, lng);
         }
     }
 
@@ -156,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 cName = cObject.getString("geoplugin_place");
                 cCountryCode = cObject.getString("geoplugin_countryCode");
             }
-            
+
             retCity = cName + ", " + cCountryCode;
         }
         catch(JSONException e){
