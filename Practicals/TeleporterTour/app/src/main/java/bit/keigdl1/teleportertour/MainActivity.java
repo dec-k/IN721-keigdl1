@@ -7,6 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Random;
@@ -75,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
             double lat = genLocParameter(90);
             double lng = genLocParameter(180);
 
+            String jString = null;
+
             try {
 
                 //Url of where we retrieve json data from.
@@ -86,11 +96,69 @@ public class MainActivity extends AppCompatActivity {
                 //Create a url object
                 URL URLObject = new URL(requestURL);
 
+                //Create http url connection
+                HttpURLConnection connection = (HttpURLConnection)URLObject.openConnection();
+
+                //Send url
+                connection.connect();
+
+                //Behold, the joys of java.
+                InputStream is = connection.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+
+                //Read input into var
+                String responseString;
+                StringBuilder sb = new StringBuilder();
+
+                //Step through retrieved json and add it to sb
+                while((responseString = br.readLine()) != null){
+                    sb = sb.append(responseString);
+                }
+
+                //turn the sb to reg string
+                jString = sb.toString();
+
             }
             catch(Exception e){e.printStackTrace();}
 
 
-            return null;
+            return jString;
         }
+
+        @Override
+        protected void onPostExecute(String fetchedString){
+            String cData = extractCityFromJson(fetchedString);
+
+        }
+    }
+
+    private String extractCityFromJson(String jString){
+        String retCity = null;
+
+        try{
+            //Create object of city
+            JSONObject cData = new JSONObject(jString);
+
+            //Pluck some vals out of it
+            String cName = cData.getString("geoplugin_place");
+            String cCountryCode = cData.getString("geoplugin_countryCode");
+
+            //build return string
+            retCity = cName + ", " + cCountryCode;
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return retCity;
+    }
+
+    private void populateCityName(String cData){
+        //Ref textfield for city
+        TextView txtCity = (TextView)findViewById(R.id.txtLocName);
+
+        //Update
+        txtCity.setText(cData);
     }
 }
