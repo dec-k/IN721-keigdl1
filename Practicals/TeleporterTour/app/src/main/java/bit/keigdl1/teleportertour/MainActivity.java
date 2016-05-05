@@ -1,5 +1,6 @@
 package bit.keigdl1.teleportertour;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -142,6 +143,14 @@ public class MainActivity extends AppCompatActivity {
         double lat;
         double lng;
 
+        //Create an instance of a progress dialog that will be called on this thread
+        ProgressDialog pd = new ProgressDialog(MainActivity.this);
+
+        @Override
+        protected void onPreExecute(){
+            pd.show(MainActivity.this, "Finding location...", "Test", true);
+        }
+
         @Override
         protected String doInBackground(String... params) {
 
@@ -191,13 +200,16 @@ public class MainActivity extends AppCompatActivity {
                 catch(Exception e){e.printStackTrace();}
             }
 
-
-
             return jString;
         }
 
         @Override
         protected void onPostExecute(String fetchedString){
+
+            if(pd.isShowing()){
+                pd.dismiss();
+            }
+
             String cData = extractCityFromJson(fetchedString);
 
             populateCityName(cData);
