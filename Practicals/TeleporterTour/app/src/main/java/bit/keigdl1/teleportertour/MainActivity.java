@@ -105,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
                 //Send url
                 connection.connect();
 
-
                 //Behold, the joys of java.
                 InputStream is = connection.getInputStream();
                 InputStreamReader isr = new InputStreamReader(is);
@@ -126,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
             }
             catch(Exception e){e.printStackTrace();}
 
-
             return jString;
         }
 
@@ -137,21 +135,28 @@ public class MainActivity extends AppCompatActivity {
             populateCityName(cData);
 
             populateLatLng(lat,lng);
-
         }
     }
 
     private String extractCityFromJson(String jString){
         String retCity = "";
 
+        String cName;
+        String cCountryCode;
+
         try{
-            JSONObject cObject = new JSONObject(jString);
+            if (jString.equals("[[]]")){
+                cName = "Bad Loc";
+                cCountryCode = "??";
+            }else{
+                //Convert string to jsonObject
+                JSONObject cObject = new JSONObject(jString);
 
-            //Pluck some vals out of it
-            String cName = cObject.getString("geoplugin_place");
-            String cCountryCode = cObject.getString("geoplugin_countryCode");
-
-            //build return string
+                //Pluck some vals out of it
+                cName = cObject.getString("geoplugin_place");
+                cCountryCode = cObject.getString("geoplugin_countryCode");
+            }
+            
             retCity = cName + ", " + cCountryCode;
         }
         catch(JSONException e){
