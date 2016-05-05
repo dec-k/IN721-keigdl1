@@ -77,12 +77,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class AsyncFetchNearestCity extends AsyncTask<String,Void,String> {
+        double lat;
+        double lng;
 
         @Override
         protected String doInBackground(String... params) {
             //Generate lat and lng vals
-            double lat = genLocParameter(90);
-            double lng = genLocParameter(180);
+            lat = genLocParameter(90);
+            lng = genLocParameter(180);
 
             String jString = null;
 
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //Send url
                 connection.connect();
+
 
                 //Behold, the joys of java.
                 InputStream is = connection.getInputStream();
@@ -130,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String fetchedString){
             String cData = extractCityFromJson(fetchedString);
+
+            populateCityName(cData);
+
+            populateLatLng(lat,lng);
 
         }
     }
