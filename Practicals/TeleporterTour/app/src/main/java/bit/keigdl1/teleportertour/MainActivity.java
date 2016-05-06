@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             //Setup async processing to get nearby city and display.
-            AsyncFetchNearestCityNoFail APIThread = new AsyncFetchNearestCityNoFail();
+            AsyncFetchNearestCityNoFail APIThread = new AsyncFetchNearestCityNoFail(MainActivity.this);
 
             //Execute async call
             APIThread.execute();
@@ -144,17 +144,20 @@ public class MainActivity extends AppCompatActivity {
         double lng;
 
         //Create an instance of a progress dialog that will be called on this thread
-        ProgressDialog pd = new ProgressDialog(MainActivity.this);
+        ProgressDialog pd;
+
+        public AsyncFetchNearestCityNoFail(MainActivity activity) {
+            pd = new ProgressDialog(activity);
+        }
 
         @Override
         protected void onPreExecute(){
-            pd.show(MainActivity.this, "Finding location...", "Test", true);
+            pd.setMessage("Finding Location...");
+            pd.show();
         }
 
         @Override
         protected String doInBackground(String... params) {
-
-
             String jString = "[[]]";
 
             while(jString.equals("[[]]")){
