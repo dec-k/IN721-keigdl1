@@ -158,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String jString = "[[]]";
+            String jString = "null";
 
-            while(jString.equals("[[]]")){
+            while(jString.equals("null")){
                 //Generate lat and lng vals
                 lat = genLocParameter(90);
                 lng = genLocParameter(180);
@@ -196,9 +196,11 @@ public class MainActivity extends AppCompatActivity {
                         sb = sb.append(responseString);
                     }
 
-                    //turn the sb to reg string
+                    //turn the sb to reg string (raw json)
                     jString = sb.toString();
 
+                    //extract city name from raw json
+                    jString = extractCityFromJson(jString);
                 }
                 catch(Exception e){e.printStackTrace();}
             }
@@ -213,9 +215,9 @@ public class MainActivity extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            String cData = extractCityFromJson(fetchedString);
+            //String cData = extractCityFromJson(fetchedString);
 
-            populateCityName(cData);
+            populateCityName(fetchedString + "aids");
 
             populateLatLng(lat, lng);
         }
@@ -229,15 +231,27 @@ public class MainActivity extends AppCompatActivity {
 
         try{
             if (jString.equals("[[]]")){
-                cName = "Bad Loc";
-                cCountryCode = "??";
+                //Convert string to jsonObject
+                JSONObject cObject = new JSONObject(jString);
+
+                //Pluck some vals out of it
+                cName = cObject.optString("geoplugin_place");
+                cCountryCode = cObject.optString("geoplugin_countryCode");
+
+                if(cName == "" || cCountryCode == ""){
+                    return "null";
+                }
             }else{
                 //Convert string to jsonObject
                 JSONObject cObject = new JSONObject(jString);
 
                 //Pluck some vals out of it
-                cName = cObject.getString("geoplugin_place");
-                cCountryCode = cObject.getString("geoplugin_countryCode");
+                cName = cObject.optString("geoplugin_place");
+                cCountryCode = cObject.optString("geoplugin_countryCode");
+
+                if(cName == "" || cCountryCode == ""){
+                    return "null";
+                }
             }
 
             retCity = cName + ", " + cCountryCode;
