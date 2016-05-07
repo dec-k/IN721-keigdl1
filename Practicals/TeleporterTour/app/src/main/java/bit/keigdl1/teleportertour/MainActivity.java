@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String jString = "null";
+            String jString = null;
 
-            while(jString.equals("null")){
+            while(extractCityFromJson(jString) == (null)){
                 //Generate lat and lng vals
                 lat = genLocParameter(90);
                 lng = genLocParameter(180);
@@ -187,36 +187,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String fetchedString){
 
+            //Close the progress dialog if it is currently showing, very fancy!
             if(pd.isShowing()){
                 pd.dismiss();
             }
 
-            //String cData = extractCityFromJson(fetchedString);
-
+            //Populate fields
             populateCityName(extractCityFromJson(fetchedString));
-
             populateLatLng(lat, lng);
         }
     }
 
     private String extractCityFromJson(String jString){
-        String retCity = "";
+        String retCity = null;
 
         String cName;
         String cCountryCode;
 
         try{
-            if (jString.equals("[[]]")){
-                //Convert string to jsonObject
-                JSONObject cObject = new JSONObject(jString);
-
-                //Pluck some vals out of it
-                cName = cObject.optString("geoplugin_place");
-                cCountryCode = cObject.optString("geoplugin_countryCode");
-
-                if(cName == "" || cCountryCode == ""){
-                    return "null";
-                }
+            if (jString == null){
+                return null;
             }else{
                 //Convert string to jsonObject
                 JSONObject cObject = new JSONObject(jString);
@@ -224,12 +214,9 @@ public class MainActivity extends AppCompatActivity {
                 //Pluck some vals out of it
                 cName = cObject.optString("geoplugin_place");
                 cCountryCode = cObject.optString("geoplugin_countryCode");
-
-                if(cName == "" || cCountryCode == ""){
-                    return "null";
-                }
             }
 
+            //Build a formatted string
             retCity = cName + ", " + cCountryCode;
         }
         catch(JSONException e){
