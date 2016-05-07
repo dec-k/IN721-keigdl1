@@ -77,6 +77,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String buildJSONfromURL(String url){
+        String jString = null;
+
+        try {
+            //Create a url object
+            URL URLObject = new URL(url);
+
+            //Create http url connection
+            HttpURLConnection connection = (HttpURLConnection)URLObject.openConnection();
+
+            //Send url
+            connection.connect();
+
+            //Behold, the joys of java.
+            InputStream is = connection.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+
+            //Read input into var
+            String responseString;
+            StringBuilder sb = new StringBuilder();
+
+            //Step through retrieved json and add it to sb
+            while((responseString = br.readLine()) != null){
+                sb = sb.append(responseString);
+            }
+
+            //turn the sb to reg string
+            jString = sb.toString();
+        }
+        catch(Exception e){e.printStackTrace();}
+
+        return jString;
+    }
+
     class AsyncFetchNearestCity extends AsyncTask<String,Void,String> {
         double lat;
         double lng;
@@ -89,42 +124,14 @@ public class MainActivity extends AppCompatActivity {
 
             String jString = null;
 
-            try {
+            //Url of where we retrieve json data from.
+            String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
+                    "lat=" + lat +
+                    "&long=" + lng +
+                    "&format=json";
 
-                //Url of where we retrieve json data from.
-                String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
-                        "lat=" + lat +
-                        "&long=" + lng +
-                        "&format=json";
 
-                //Create a url object
-                URL URLObject = new URL(requestURL);
 
-                //Create http url connection
-                HttpURLConnection connection = (HttpURLConnection)URLObject.openConnection();
-
-                //Send url
-                connection.connect();
-
-                //Behold, the joys of java.
-                InputStream is = connection.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                BufferedReader br = new BufferedReader(isr);
-
-                //Read input into var
-                String responseString;
-                StringBuilder sb = new StringBuilder();
-
-                //Step through retrieved json and add it to sb
-                while((responseString = br.readLine()) != null){
-                    sb = sb.append(responseString);
-                }
-
-                //turn the sb to reg string
-                jString = sb.toString();
-
-            }
-            catch(Exception e){e.printStackTrace();}
 
             return jString;
         }
@@ -165,44 +172,13 @@ public class MainActivity extends AppCompatActivity {
                 lat = genLocParameter(90);
                 lng = genLocParameter(180);
 
-                try {
+                //Url of where we retrieve json data from.
+                String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
+                        "lat=" + lat +
+                        "&long=" + lng +
+                        "&format=json";
 
-                    //Url of where we retrieve json data from.
-                    String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
-                            "lat=" + lat +
-                            "&long=" + lng +
-                            "&format=json";
-
-                    //Create a url object
-                    URL URLObject = new URL(requestURL);
-
-                    //Create http url connection
-                    HttpURLConnection connection = (HttpURLConnection)URLObject.openConnection();
-
-                    //Send url
-                    connection.connect();
-
-                    //Behold, the joys of java.
-                    InputStream is = connection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(is);
-                    BufferedReader br = new BufferedReader(isr);
-
-                    //Read input into var
-                    String responseString;
-                    StringBuilder sb = new StringBuilder();
-
-                    //Step through retrieved json and add it to sb
-                    while((responseString = br.readLine()) != null){
-                        sb = sb.append(responseString);
-                    }
-
-                    //turn the sb to reg string (raw json)
-                    jString = sb.toString();
-
-                    //extract city name from raw json
-                    jString = extractCityFromJson(jString);
-                }
-                catch(Exception e){e.printStackTrace();}
+                jString = buildJSONfromURL(requestURL);
             }
 
             return jString;
@@ -217,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
             //String cData = extractCityFromJson(fetchedString);
 
-            populateCityName(fetchedString + "aids");
+            populateCityName(extractCityFromJson(fetchedString));
 
             populateLatLng(lat, lng);
         }
