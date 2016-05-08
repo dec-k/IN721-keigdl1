@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             imgURL = "https://farm" + fID +         //Farm ID
                      ".staticflickr.com/" + sID +   //Server ID
                      "/" + pID + "_" + sec +        //Photo ID + Secret
-                     ".jpg";                        //Desired Output format
+                     "_-.jpg";                        //Desired Output format
 
         }catch(JSONException e){e.printStackTrace();}
 
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //Build a formatted string
-            retCity = cName + ", " + cCountryCode;
+            retCity = cName; //TODO return city name and country code w/o breaking flickr search
         }
         catch(JSONException e){
             e.printStackTrace();
