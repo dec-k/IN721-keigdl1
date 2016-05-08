@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity {
 
             //Concatenate those strings to match required url format
             imgURL = "https://farm" + fID +         //Farm ID
-                     ".staticflickr.com/" + sID +   //Server ID
-                     "/" + pID + "_" + sec +        //Photo ID + Secret
-                     "_-.jpg";                        //Desired Output format
+                    ".staticflickr.com/" + sID +   //Server ID
+                    "/" + pID + "_" + sec +        //Photo ID + Secret
+                    "_m.jpg";                        //Desired Output format
 
         }catch(JSONException e){e.printStackTrace();}
 
@@ -197,9 +197,6 @@ public class MainActivity extends AppCompatActivity {
                     "lat=" + lat +
                     "&long=" + lng +
                     "&format=json";
-
-
-
 
             return jString;
         }
@@ -274,9 +271,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateImageView(Bitmap bmp){
+        //Ref textbox, used if flickr cant return a solid image.
+        TextView txtFailed = (TextView)findViewById(R.id.txtFailedLoad);
+        txtFailed.setText("");
+
         //Ref picturebox
         ImageView img = (ImageView)findViewById(R.id.imgLoc);
         img.setImageBitmap(bmp);
+
+        txtFailed.setText("No Viable Image.");
     }
 
     private String extractCityFromJson(String jString){
