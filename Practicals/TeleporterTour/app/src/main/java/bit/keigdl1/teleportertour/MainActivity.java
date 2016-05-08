@@ -1,6 +1,8 @@
 package bit.keigdl1.teleportertour;
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -147,7 +149,32 @@ public class MainActivity extends AppCompatActivity {
 
         //Return the generated img url
         return imgURL;
+    }
 
+    private Bitmap bmpFromUrl(String imgURL){
+        //Declare an empty bmp
+        Bitmap img = null;
+
+        try{
+            //String to URLObj
+            URL URLObject = new URL(imgURL);
+
+            //Declare connection & connect.
+            HttpURLConnection connection = (HttpURLConnection) URLObject.openConnection();
+            connection.connect();
+
+            //Test response code
+            int responseCode = connection.getResponseCode();
+
+            //200 == successful request
+            if(responseCode == 200){
+                InputStream is = connection.getInputStream();
+                img = BitmapFactory.decodeStream(is);
+            }
+
+        }catch(java.io.IOException e){e.printStackTrace();}
+
+        return img;
     }
 
     class AsyncFetchNearestCity extends AsyncTask<String,Void,String> {
@@ -217,6 +244,8 @@ public class MainActivity extends AppCompatActivity {
                         "&format=json";
 
                 jString = buildJSONfromURL(requestURL);
+
+                //attempt to establish
             }
 
             return jString;
