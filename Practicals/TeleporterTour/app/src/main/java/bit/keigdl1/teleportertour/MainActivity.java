@@ -133,21 +133,24 @@ public class MainActivity extends AppCompatActivity {
             //Inside photos, there is an array called 'photo', get it.
             JSONArray photoArray = rawObj.getJSONArray("photo");
 
-            //Get only the first result of the photo array
-            JSONObject firstPhoto = photoArray.getJSONObject(0);
+            if(photoArray.length() > 0){
+                //Get only the first result of the photo array
+                JSONObject firstPhoto = photoArray.getJSONObject(0);
 
-            //Begin extracting details of the photo object required to build a url
-            String fID = firstPhoto.getString("farm");      //Server farm ID
-            String sID = firstPhoto.getString("server");    //Server ID
-            String pID = firstPhoto.getString("id");        //Photo ID
-            String sec = firstPhoto.getString("secret");    //(Photo's) Secret ID
+                //Begin extracting details of the photo object required to build a url
+                String fID = firstPhoto.getString("farm");      //Server farm ID
+                String sID = firstPhoto.getString("server");    //Server ID
+                String pID = firstPhoto.getString("id");        //Photo ID
+                String sec = firstPhoto.getString("secret");    //(Photo's) Secret ID
 
-            //Concatenate those strings to match required url format
-            imgURL = "https://farm" + fID +         //Farm ID
-                    ".staticflickr.com/" + sID +   //Server ID
-                    "/" + pID + "_" + sec +        //Photo ID + Secret
-                    "_m.jpg";                        //Desired Output format
-
+                //Concatenate those strings to match required url format
+                imgURL = "https://farm" + fID +         //Farm ID
+                        ".staticflickr.com/" + sID +   //Server ID
+                        "/" + pID + "_" + sec +        //Photo ID + Secret
+                        "_m.jpg";                        //Desired Output format
+            }else{
+                imgURL = "f";
+            }
         }catch(JSONException e){e.printStackTrace();}
 
         //Return the generated img url
@@ -214,6 +217,7 @@ public class MainActivity extends AppCompatActivity {
     class AsyncFetchNearestCityNoFail extends AsyncTask<String,Void,String> {
         double lat;
         double lng;
+        boolean viableImage;
 
         String cityimgURL;
         Bitmap imgBMP;
@@ -250,7 +254,13 @@ public class MainActivity extends AppCompatActivity {
 
                 //attempt to establish an image from the city in question
                 cityimgURL = buildImageURL(extractCityFromJson(jString));
-                imgBMP = bmpFromUrl(cityimgURL);
+
+                if(cityimgURL == null || cityimgURL.equals("f")){
+                    viableImage = false;
+                }else{
+                    viableImage = true;
+                    imgBMP = bmpFromUrl(cityimgURL);
+                }
             }
 
             return jString;
@@ -258,6 +268,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String fetchedString){
+            //Ref textbox, used if flickr cant return a solid image.
+            TextView txtFailed = (TextView)findViewById(R.id.txtFailedLoad);
+
             //Close the progress dialog if it is currently showing, very fancy!
             if(pd.isShowing()){
                 pd.dismiss();
@@ -266,20 +279,25 @@ public class MainActivity extends AppCompatActivity {
             //Populate fields
             populateCityName(extractCityFromJson(fetchedString));
             populateLatLng(lat, lng);
-            populateImageView(imgBMP);
+
+            if(viableImage){
+                populateImageView(imgBMP);
+                txtFailed.setText("");
+            }else{
+                //ref image view
+                ImageView img = (ImageView)findViewById(R.id.imgLoc);
+                img.setImageResource(0);
+
+                txtFailed.setText("No Viable Image.");
+            }
+
         }
     }
 
     private void populateImageView(Bitmap bmp){
-        //Ref textbox, used if flickr cant return a solid image.
-        TextView txtFailed = (TextView)findViewById(R.id.txtFailedLoad);
-        txtFailed.setText("");
-
         //Ref picturebox
         ImageView img = (ImageView)findViewById(R.id.imgLoc);
         img.setImageBitmap(bmp);
-
-        txtFailed.setText("No Viable Image.");
     }
 
     private String extractCityFromJson(String jString){
