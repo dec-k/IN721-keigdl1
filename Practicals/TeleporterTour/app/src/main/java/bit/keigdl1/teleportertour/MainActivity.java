@@ -261,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String fetchedString){
-
             //Close the progress dialog if it is currently showing, very fancy!
             if(pd.isShowing()){
                 pd.dismiss();
@@ -270,11 +269,14 @@ public class MainActivity extends AppCompatActivity {
             //Populate fields
             populateCityName(extractCityFromJson(fetchedString));
             populateLatLng(lat, lng);
-
-            //Ref picturebox
-            ImageView img = (ImageView)findViewById(R.id.imgLoc);
-            img.setImageBitmap(imgBMP);
+            populateImageView(imgBMP);
         }
+    }
+
+    private void populateImageView(Bitmap bmp){
+        //Ref picturebox
+        ImageView img = (ImageView)findViewById(R.id.imgLoc);
+        img.setImageBitmap(bmp);
     }
 
     private String extractCityFromJson(String jString){
