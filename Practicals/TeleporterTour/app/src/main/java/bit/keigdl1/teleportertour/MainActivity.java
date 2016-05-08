@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -65,15 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Execute async call
             APIThread.execute();
-
-            /*
-            //Generate a lat and a lng, then feed them to a displayer method.
-            double lat = genLocParameter(90);
-            double lng = genLocParameter(180);
-
-            //Populate both fields on the form.
-            populateLatLng(lat, lng);
-            */
         }
     }
 
@@ -110,6 +102,52 @@ public class MainActivity extends AppCompatActivity {
         catch(Exception e){e.printStackTrace();}
 
         return jString;
+    }
+
+    private String buildImageURL(String cityName){
+        String imgURL = null;
+
+        String flickrApiCall = "https://api.flickr.com/services/rest/?" +
+                "method=flickr.photos.search" +                 //API Method
+                "&api_key=1ea787f450e9b9b35ab211f8ca1a4dcd" +   //API Key
+                "&tags=" + cityName +                           //Search tag
+                "&format=json" +                                //Output Format
+                "&nojsoncallback=1";                            //Prevents that weird text appended to flickr calls.
+
+        //Call a method to convert the URL into a json object
+        buildJSONfromURL(flickrApiCall);
+
+        //Begin building a flickr image url in accordance w/ api guidelines
+        try{
+            //Raw json -> object
+            JSONObject rawData = new JSONObject(flickrApiCall);
+
+            //grab value of object defined
+            JSONObject rawObj = rawData.getJSONObject("photos");
+
+            //Inside photos, there is an array called 'photo', get it.
+            JSONArray photoArray = rawObj.getJSONArray("photo");
+
+            //Get only the first result of the photo array
+            JSONObject firstPhoto = photoArray.getJSONObject(0);
+
+            //Begin extracting details of the photo object required to build a url
+            String fID = firstPhoto.getString("farm");      //Server farm ID
+            String sID = firstPhoto.getString("server");    //Server ID
+            String pID = firstPhoto.getString("id");        //Photo ID
+            String sec = firstPhoto.getString("secret");    //(Photo's) Secret ID
+
+            //Concatenate those strings to match required url format
+            imgURL = "https://farm" + fID +         //Farm ID
+                     ".staticflickr.com/" + sID +   //Server ID
+                     "/" + pID + "_" + sec +        //Photo ID + Secret
+                     ".jpg";                        //Desired Output format
+
+        }catch(JSONException e){e.printStackTrace();}
+
+        //Return the generated img url
+        return imgURL;
+
     }
 
     class AsyncFetchNearestCity extends AsyncTask<String,Void,String> {
@@ -200,7 +238,6 @@ public class MainActivity extends AppCompatActivity {
 
     private String extractCityFromJson(String jString){
         String retCity = null;
-
         String cName;
         String cCountryCode;
 
