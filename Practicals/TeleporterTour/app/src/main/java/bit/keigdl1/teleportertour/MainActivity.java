@@ -3,12 +3,14 @@ package bit.keigdl1.teleportertour;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -17,6 +19,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 "&nojsoncallback=1";                            //Prevents that weird text appended to flickr calls.
 
         //Call a method to convert the URL into a json object
-        buildJSONfromURL(flickrApiCall);
+        flickrApiCall = buildJSONfromURL(flickrApiCall);
 
         //Begin building a flickr image url in accordance w/ api guidelines
         try{
@@ -215,6 +218,9 @@ public class MainActivity extends AppCompatActivity {
         double lat;
         double lng;
 
+        String cityimgURL;
+        Bitmap imgBMP;
+
         //Create an instance of a progress dialog that will be called on this thread
         ProgressDialog pd;
 
@@ -245,7 +251,9 @@ public class MainActivity extends AppCompatActivity {
 
                 jString = buildJSONfromURL(requestURL);
 
-                //attempt to establish
+                //attempt to establish an image from the city in question
+                cityimgURL = buildImageURL(extractCityFromJson(jString));
+                imgBMP = bmpFromUrl(cityimgURL);
             }
 
             return jString;
@@ -262,6 +270,10 @@ public class MainActivity extends AppCompatActivity {
             //Populate fields
             populateCityName(extractCityFromJson(fetchedString));
             populateLatLng(lat, lng);
+
+            //Ref picturebox
+            ImageView img = (ImageView)findViewById(R.id.imgLoc);
+            img.setImageBitmap(imgBMP);
         }
     }
 
