@@ -1,8 +1,12 @@
 package bit.keigdl1.teleportertour;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -219,6 +223,16 @@ public class MainActivity extends AppCompatActivity {
         double lng;
         boolean viableImage;
 
+        //Create a location manager instance
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //Create a criteria instance, criteria types hold criterium for determining the GPS method to use.
+        Criteria cri = new Criteria();
+        //Set provider info
+        String providerName = lm.getBestProvider(cri, false);
+
+        //Set a last known location
+        Location loc = lm.getLastKnownLocation(providerName);
+
         String cityimgURL;
         Bitmap imgBMP;
 
@@ -240,9 +254,14 @@ public class MainActivity extends AppCompatActivity {
             String jString = null;
 
             while(extractCityFromJson(jString) == (null)){
-                //Generate lat and lng vals
+                /*Generate lat and lng vals
                 lat = genLocParameter(90);
-                lng = genLocParameter(180);
+                lng = genLocParameter(180);*/
+                lat = loc.getLatitude();
+                lng = loc.getLongitude();
+
+                //Get Lat & long from gps.
+
 
                 //Url of where we retrieve json data from.
                 String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
