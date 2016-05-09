@@ -57,16 +57,8 @@ public class MainActivity extends AppCompatActivity {
         String providerName = LocationManager.NETWORK_PROVIDER;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, );
-            TextView txtdebug = (TextView) findViewById(R.id.txtLocName);
-            txtdebug.setText("permission check failed!");
+            //This is where I could code dialog windows asking the user for permissions.
+            //Having this stub here w/o said code prevents a compiler error.
             return;
         }
         lm.requestLocationUpdates(providerName, 400, 1, new customLocListener());
@@ -166,6 +158,10 @@ public class MainActivity extends AppCompatActivity {
 
             //turn the sb to reg string
             jString = sb.toString();
+
+            if(jString.equals("[[]]")){
+                return "f";
+            }
         }
         catch(Exception e){e.printStackTrace();}
 
@@ -316,6 +312,11 @@ public class MainActivity extends AppCompatActivity {
                 //attempt to establish an image from the city in question
                 cityimgURL = buildImageURL(extractCityFromJson(jString));
 
+                if(jString.equals("f")){
+                    //Return early if jString returned an 'f' value. Means viable location missing.
+                    return jString;
+                }
+
                 if(cityimgURL == null || cityimgURL.equals("f")){
                     viableImage = false;
                 }else{
@@ -338,7 +339,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //Populate fields
-            populateCityName(extractCityFromJson(fetchedString));
+            if(fetchedString.equals("f")){
+                //You in the wopwops. :japanese_goblin:
+                populateCityName("The WopWops");
+            }else{
+                populateCityName(extractCityFromJson(fetchedString));
+            }
             populateLatLng(lat, lng);
 
             if(viableImage){
