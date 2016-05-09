@@ -36,6 +36,8 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    double lat;
+    double lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
     private class customLocListener implements LocationListener{
         @Override
         public void onLocationChanged(Location location){
+            lat = location.getLatitude();
+            lng = location.getLongitude();
             //Setup async processing to get nearby city and display.
             AsyncFetchNearestCityNoFail APIThread = new AsyncFetchNearestCityNoFail(MainActivity.this);
 
@@ -271,19 +275,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class AsyncFetchNearestCityNoFail extends AsyncTask<String,Void,String> {
-        double lat;
-        double lng;
         boolean viableImage;
-
-        //Create a location manager instance
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //Create a criteria instance, criteria types hold criterium for determining the GPS method to use.
-        Criteria cri = new Criteria();
-        //Set provider info
-        String providerName = lm.getBestProvider(cri, false);
-
-        //Set a last known location
-        Location loc = lm.getLastKnownLocation(providerName);
 
         String cityimgURL;
         Bitmap imgBMP;
@@ -309,12 +301,7 @@ public class MainActivity extends AppCompatActivity {
                 /*Generate lat and lng vals
                 lat = genLocParameter(90);
                 lng = genLocParameter(180);*/
-                lat = loc.getLatitude();
-                lng = loc.getLongitude();
-
-                //Get Lat & long from gps.
-
-
+                
                 //Url of where we retrieve json data from.
                 String requestURL = "http://www.geoplugin.net/extras/location.gp?" +
                         "lat=" + lat +
