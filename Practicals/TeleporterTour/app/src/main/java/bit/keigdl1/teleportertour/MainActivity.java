@@ -54,12 +54,25 @@ public class MainActivity extends AppCompatActivity {
         //Create a criteria instance, criteria types hold criterium for determining the GPS method to use.
         Criteria cri = new Criteria();
         //Set provider info
-        String providerName = lm.getBestProvider(cri, false);
+        String providerName = LocationManager.NETWORK_PROVIDER;
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, );
+            TextView txtdebug = (TextView) findViewById(R.id.txtLocName);
+            txtdebug.setText("permission check failed!");
+            return;
+        }
         lm.requestLocationUpdates(providerName, 400, 1, new customLocListener());
 
-        /*Set a last known location
-        Location loc = lm.getLastKnownLocation(providerName);*/
+        //Set a last known location
+        Location loc = lm.getLastKnownLocation(providerName);
     }
 
     private double genLocParameter(double param){
