@@ -56,28 +56,15 @@ public class MainActivity extends AppCompatActivity {
             xVelocity = setVelocity(x);
             yVelocity = setVelocity(y);
 
-            /*
-            Update the location of the imageView. There are a lot of ways to do this.
-            (The best way, is to not use an imageview as an animated object.)
-            You can change padding, scroll the view by a certain amount, or apply offsets to
-            its location. They all /kinda/ work.
-            */
-
-            //ScrollBy Method
-            //img.scrollBy(xVelocity, yVelocity);
-
             //Raw location setting method
             img.setX(imgX + xVelocity);
             img.setY(imgY + yVelocity);
+
             //Update img X and Y
             imgX += xVelocity;
             imgY += yVelocity;
 
-
-            //Offset Method
-            //img.offsetTopAndBottom(xVelocity);
-            //img.offsetLeftAndRight(yVelocity);
-
+            //Force the view to redraw itself
             img.invalidate();
 
         }
