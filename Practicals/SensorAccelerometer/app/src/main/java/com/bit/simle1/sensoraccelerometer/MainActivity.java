@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
             //Force the view to redraw itself
             img.invalidate();
-
         }
 
         @Override
@@ -80,26 +79,26 @@ public class MainActivity extends AppCompatActivity {
 
         if(accelAxisVal > 0) {
             if (accelAxisVal > 1) {
-                returnVelocity = 3;
+                returnVelocity = -5;
             }
             if (accelAxisVal > 4) {
-                returnVelocity = 5;
+                returnVelocity = -10;
             }
             if (accelAxisVal > 7) {
-                returnVelocity = 7;
+                returnVelocity = -15;
             }
 
             return returnVelocity;
         }
         else if(accelAxisVal < 0.0){
             if(accelAxisVal < -1){
-                returnVelocity = -3;
+                returnVelocity = 5;
             }
             if(accelAxisVal < -4){
-                returnVelocity = -5;
+                returnVelocity = 10;
             }
             if(accelAxisVal < -7){
-                returnVelocity = -7;
+                returnVelocity = 15;
             }
 
             return returnVelocity;
