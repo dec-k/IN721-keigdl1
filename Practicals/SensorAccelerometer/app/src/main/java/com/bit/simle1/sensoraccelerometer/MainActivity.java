@@ -48,22 +48,9 @@ public class MainActivity extends AppCompatActivity {
             tvY.setText("Y:  " + String.format("%.3f", y));
             tvZ.setText("Z:  " + String.format("%.3f", z));
 
-            if(x > 1.0){
-                xVelocity = -1;
-
-            }
-
-            if(x < 0.0){
-                xVelocity = 1;
-            }
-
-            if(y > 1.0){
-                yVelocity = -1;
-            }
-
-            if(y < 0.0){
-                yVelocity = 1;
-            }
+            //Determine x velocity, more tilt means more vel
+            xVelocity = setVelocity(x);
+            yVelocity = setVelocity(y);
 
             //Update imageview position
             img.scrollBy(xVelocity, yVelocity);
@@ -75,6 +62,39 @@ public class MainActivity extends AppCompatActivity {
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
         }
+    }
+
+    private int setVelocity(float accelAxisVal){
+        int returnVelocity = 0;
+
+        if(accelAxisVal > 0) {
+            if (accelAxisVal > 1) {
+                returnVelocity = 3;
+            }
+            if (accelAxisVal > 4) {
+                returnVelocity = 5;
+            }
+            if (accelAxisVal > 7) {
+                returnVelocity = 7;
+            }
+
+            return returnVelocity;
+        }
+        else if(accelAxisVal < 0.0){
+            if(accelAxisVal < -1){
+                returnVelocity = -3;
+            }
+            if(accelAxisVal < -4){
+                returnVelocity = -5;
+            }
+            if(accelAxisVal < -7){
+                returnVelocity = -7;
+            }
+
+            return returnVelocity;
+        }
+
+        return returnVelocity;
     }
 
     @Override
