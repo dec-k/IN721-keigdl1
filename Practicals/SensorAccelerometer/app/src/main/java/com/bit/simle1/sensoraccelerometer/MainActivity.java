@@ -37,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
             TextView tvY = (TextView) findViewById(R.id.tvY);
             TextView tvZ = (TextView) findViewById(R.id.tvZ);
 
-            tvX.setText("" + x);
-            tvY.setText("" + y);
-            tvZ.setText("" + z);
+            //I liked seeing the values, so I decided to leave them displaying!
+            tvX.setText("X:  " + String.format("%.3f", x));
+            tvY.setText("Y:  " + String.format("%.3f", y));
+            tvZ.setText("Z:  " + String.format("%.3f", z));
         }
 
         @Override

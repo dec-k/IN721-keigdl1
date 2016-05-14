@@ -14,26 +14,31 @@
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvX"
-        android:layout_above="@+id/tvY"
-        android:layout_alignLeft="@+id/tvY"
-        android:layout_alignStart="@+id/tvY"
-        android:layout_marginBottom="53dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp"
+        android:textStyle="italic" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvY"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/tvX"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp"
+        android:textStyle="italic" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/tvZ"
-        android:layout_marginTop="53dp"
         android:layout_below="@+id/tvY"
-        android:layout_alignLeft="@+id/tvY"
-        android:layout_alignStart="@+id/tvY" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="20dp"
+        android:textStyle="italic" />
 </RelativeLayout>
