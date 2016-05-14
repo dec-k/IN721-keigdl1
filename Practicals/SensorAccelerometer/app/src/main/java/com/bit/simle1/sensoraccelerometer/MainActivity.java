@@ -6,12 +6,15 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     SensorManager sm;
     Sensor accel;
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         sm = (SensorManager)MainActivity.this.getSystemService(SENSOR_SERVICE);
         accel = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
-
+        img = (ImageView) findViewById(R.id.imageView);
+        img.setImageResource(R.drawable.ball);
     }
 
     public class accelerometerhandler implements SensorEventListener
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
             float y = event.values[1];
             float z = event.values[2];
 
+            int xVelocity = 0;
+            int yVelocity = 0;
+
 
             TextView tvX = (TextView) findViewById(R.id.tvX);
             TextView tvY = (TextView) findViewById(R.id.tvY);
@@ -41,6 +47,28 @@ public class MainActivity extends AppCompatActivity {
             tvX.setText("X:  " + String.format("%.3f", x));
             tvY.setText("Y:  " + String.format("%.3f", y));
             tvZ.setText("Z:  " + String.format("%.3f", z));
+
+            if(x > 1.0){
+                xVelocity = -1;
+
+            }
+
+            if(x < 0.0){
+                xVelocity = 1;
+            }
+
+            if(y > 1.0){
+                yVelocity = -1;
+            }
+
+            if(y < 0.0){
+                yVelocity = 1;
+            }
+
+            //Update imageview position
+            img.scrollBy(xVelocity, yVelocity);
+            img.invalidate();
+
         }
 
         @Override
