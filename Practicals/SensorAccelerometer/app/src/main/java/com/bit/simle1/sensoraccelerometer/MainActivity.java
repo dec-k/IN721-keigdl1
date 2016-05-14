@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     SensorManager sm;
     Sensor accel;
     ImageView img;
+    float imgX;
+    float imgY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
         accel = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         img = (ImageView) findViewById(R.id.imageView);
         img.setImageResource(R.drawable.ball);
+
+        imgX = 0;
+        imgY = 0;
     }
 
     public class accelerometerhandler implements SensorEventListener
@@ -38,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             int xVelocity = 0;
             int yVelocity = 0;
 
-
             TextView tvX = (TextView) findViewById(R.id.tvX);
             TextView tvY = (TextView) findViewById(R.id.tvY);
             TextView tvZ = (TextView) findViewById(R.id.tvZ);
@@ -48,12 +52,32 @@ public class MainActivity extends AppCompatActivity {
             tvY.setText("Y:  " + String.format("%.3f", y));
             tvZ.setText("Z:  " + String.format("%.3f", z));
 
-            //Determine x velocity, more tilt means more vel
+            //Determine velocities
             xVelocity = setVelocity(x);
             yVelocity = setVelocity(y);
 
-            //Update imageview position
-            img.scrollBy(xVelocity, yVelocity);
+            /*
+            Update the location of the imageView. There are a lot of ways to do this.
+            (The best way, is to not use an imageview as an animated object.)
+            You can change padding, scroll the view by a certain amount, or apply offsets to
+            its location. They all /kinda/ work.
+            */
+
+            //ScrollBy Method
+            //img.scrollBy(xVelocity, yVelocity);
+
+            //Raw location setting method
+            img.setX(imgX + xVelocity);
+            img.setY(imgY + yVelocity);
+            //Update img X and Y
+            imgX += xVelocity;
+            imgY += yVelocity;
+
+
+            //Offset Method
+            //img.offsetTopAndBottom(xVelocity);
+            //img.offsetLeftAndRight(yVelocity);
+
             img.invalidate();
 
         }
