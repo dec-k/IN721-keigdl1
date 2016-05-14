@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Determine velocities
             xVelocity = setVelocity(x);
-            yVelocity = setVelocity(y);
+            yVelocity = (setVelocity(y) - (setVelocity(y) * 2)); //Inverts to correct weird behavior
 
             //Raw location setting method
             img.setX(imgX + xVelocity);
