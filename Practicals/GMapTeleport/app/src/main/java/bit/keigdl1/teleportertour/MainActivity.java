@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         double lat = -45.8624413;
         double lng = 170.5090949;
 
+        //Otherwise, randomise.
         lat = genLocParameter(lat);
         lng = genLocParameter(lng);
 
