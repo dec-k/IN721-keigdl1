@@ -21,4 +21,5 @@
             android:value="@string/google_maps_key" />
     </application>
 
+
 </manifest>

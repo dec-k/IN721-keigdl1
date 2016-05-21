@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class MapCallBackClass implements OnMapReadyCallback
     {
+
         @Override
         public void onMapReady(GoogleMap googleMap){
             mMap = googleMap;
