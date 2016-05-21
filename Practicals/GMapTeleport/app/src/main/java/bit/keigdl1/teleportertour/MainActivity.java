@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     SupportMapFragment mapFragment;
     GoogleMap mMap;
-    LatLng dunedinLatLng;
+    LatLng genLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +77,22 @@ public class MainActivity extends AppCompatActivity {
         //Set a last known location
         Location loc = lm.getLastKnownLocation(providerName);
 
+        inflateMap();
+    }
+
+    public void inflateMap(){
         //Inflate the fragment
         mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
+        //Default to dunedin
         double lat = -45.8624413;
         double lng = 170.5090949;
-        dunedinLatLng = new LatLng(lat,lng);
+
+        lat = genLocParameter(lat);
+        lng = genLocParameter(lng);
+
+        genLatLng = new LatLng(lat,lng);
 
         mapFragment.getMapAsync(new MapCallBackClass());
     }
@@ -94,9 +103,9 @@ public class MainActivity extends AppCompatActivity {
         public void onMapReady(GoogleMap googleMap){
             mMap = googleMap;
 
-            mMap.addMarker(new MarkerOptions().position(dunedinLatLng).title("Dunedin!!"));
+            mMap.addMarker(new MarkerOptions().position(genLatLng).title("Go here!"));
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(dunedinLatLng));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(genLatLng));
         }
     }
 
@@ -139,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-
+            inflateMap();
         }
     }
 }
